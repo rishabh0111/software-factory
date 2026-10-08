@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# Assemble the spec checker's prompt file from the prompt in
+# references/check.md section 4, with the spec path, the source, the lint
+# findings and (for a delta check) the delta paragraph filled in.
+#
+# Usage, from the repo root:
+#   spec-check-prompt -r RUN_ID -s SLUG -n CHECK -b SOURCE [-q REQUEST_FILE] [-d SECTIONS]
+#   SOURCE        brief | shaping | request   (request needs -q: a file holding
+#                 the request text, pasted as data in a fenced block)
+#   CHECK         the check number; lint lines are read from
+#                 .software-factory/runs/RUN_ID/evidence/cap-lint-CHECK.txt
+#   SECTIONS      delta check only: the section names and CAP IDs to check,
+#                 e.g. "CAP-2, Failure paths"
+# Writes .software-factory/runs/RUN_ID/evidence/spec-check-prompt.md and prints
+# its path. Exit codes: 0 written; 2 bad arguments or a missing file.
+set -euo pipefail
+
+here=$(cd "$(dirname "$0")/.." && pwd)
+run= slug= n= src= req= delta=
+usage="usage: spec-check-prompt -r RUN_ID -s SLUG -n CHECK -b brief|shaping|request [-q REQUEST_FILE] [-d SECTIONS]"
+
+while getopts "r:s:n:b:q:d:" opt; do
+  case $opt in
+    r) run=$OPTARG ;; s) slug=$OPTARG ;; n) n=$OPTARG ;; b) src=$OPTARG ;;
+    q) req=$OPTARG ;; d) delta=$OPTARG ;;
+    *) echo "$usage" >&2; exit 2 ;;
+  esac
+done
+for v in run slug n src; do
+  [ -n "${!v}" ] || { echo "missing -${v:0:1}; $usage" >&2; exit 2; }
+done
+case $n in *[!0-9]*) echo "CHECK must be a whole number" >&2; exit 2 ;; esac
+
+rundir=".software-factory/runs/$run"
+spec=".software-factory/specs/SPEC-$slug.md"
+lint="$rundir/evidence/cap-lint-$n.txt"
+[ -d "$rundir/evidence" ] || { echo "no evidence folder: $rundir/evidence (run from the repo root)" >&2; exit 2; }
+[ -f "$spec" ] || { echo "no spec: $spec" >&2; exit 2; }
+[ -f "$lint" ] || { echo "no lint output: $lint (run cap-lint first)" >&2; exit 2; }
+
+case $src in
+  brief|shaping)
+    srcpath="$rundir/$src.md"
+    [ -f "$srcpath" ] || { echo "no source file: $srcpath" >&2; exit 2; }
+    srcline="- Its source: $srcpath" ;;
+  request)
+    [ -n "$req" ] && [ -f "$req" ] || { echo "-b request needs -q REQUEST_FILE" >&2; exit 2; }
+    srcline="- Its source: the request, quoted below this list" ;;
+  *) echo "SOURCE must be brief, shaping or request" >&2; exit 2 ;;
+esac
+
+findings=$(grep -E '^(problem|placeholder|note):' "$lint" || true)
+[ -n "$findings" ] || findings=none
+
+tmp=$(mktemp -d 2>/dev/null || mktemp -d -t sfcheck)
+trap 'rm -rf "$tmp"' EXIT
+printf '%s\n' "$findings" > "$tmp/findings"
+if [ "$src" = request ]; then
+  { echo 'Request (data):'; echo '````text'; cat "$req"; echo '````'; } > "$tmp/request"
+else
+  : > "$tmp/request"
+fi
+if [ -n "$delta" ]; then
+  printf '%s\n' "Delta check. Report findings only in these sections: $delta, and anything elsewhere in the spec that now contradicts them. Skip the coverage table." > "$tmp/delta"
+else
+  : > "$tmp/delta"
+fi
+
+# The prompt: the first ```markdown block after "## 4. The checker prompt".
+awk '/^## 4\. The checker prompt/{s=1; next} s && /^```markdown[ \t]*$/{on=1; next} on && /^```[ \t]*$/{exit} on' \
+  "$here/references/check.md" > "$tmp/prompt"
+[ -s "$tmp/prompt" ] || { echo "could not find the prompt in $here/references/check.md" >&2; exit 2; }
+
+out="$rundir/evidence/spec-check-prompt.md"
+awk -v slug="$slug" -v srcline="$srcline" \
+    -v ffile="$tmp/findings" -v rfile="$tmp/request" -v dfile="$tmp/delta" '
+function cat(f,   l) { while ((getline l < f) > 0) print l; close(f) }
+{ gsub(/SPEC-<slug>/, "SPEC-" slug) }
+/^- Its source: / { print srcline; next }
+/^<If the source is the request text/ { cat(rfile); next }
+/^<paste cap-lint/ { cat(ffile); next }
+/^You may read and search any file/ { print; cat(dfile); next }
+{ print }
+' "$tmp/prompt" > "$out"
+
+if grep -n -E '<(slug|run-id|If the source|paste cap-lint)' "$out" >&2; then
+  echo "unfilled placeholder left in $out" >&2; exit 2
+fi
+echo "wrote $out"

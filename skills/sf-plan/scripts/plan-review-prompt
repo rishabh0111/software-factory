@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# Assemble the plan reviewer's prompt file: the reviewer prompt with its
+# placeholders filled, then each applied lens file, then the module-design
+# checks on an Interfaces block, then (round 2) the round 1 data.
+#
+# Usage, from the repo root:
+#   plan-review-prompt -r RUN_ID -s SLUG -n REVIEW -k ROUND -l LENSES -p PLANS
+#                      [-q PREREQ_PLANS] [-1 ROUND1_FILE]
+#   LENSES        comma list from: engineering,design,devex (engineering is always added)
+#   PLANS         comma list of plan paths under review
+#   PREREQ_PLANS  comma list of finished prerequisite plans; default none
+#   ROUND1_FILE   round 2 only: a file holding round 1's findings table and the
+#                 planner's decisions table, pasted under "Round 1 (data)"
+# Writes .software-factory/runs/RUN_ID/plan-review-prompt-REVIEW-ROUND.md and
+# prints its path. Exit codes: 0 written; 2 bad arguments or missing file.
+set -euo pipefail
+
+here=$(cd "$(dirname "$0")/.." && pwd)
+run= slug= n= k= lenses= plans= prereq= round1=
+usage="usage: plan-review-prompt -r RUN_ID -s SLUG -n REVIEW -k ROUND -l LENSES -p PLANS [-q PREREQ_PLANS] [-1 ROUND1_FILE]"
+
+while getopts "r:s:n:k:l:p:q:1:" opt; do
+  case $opt in
+    r) run=$OPTARG ;; s) slug=$OPTARG ;; n) n=$OPTARG ;; k) k=$OPTARG ;;
+    l) lenses=$OPTARG ;; p) plans=$OPTARG ;; q) prereq=$OPTARG ;; 1) round1=$OPTARG ;;
+    *) echo "$usage" >&2; exit 2 ;;
+  esac
+done
+for v in run slug n k plans; do
+  [ -n "${!v}" ] || { echo "missing -${v:0:1}; $usage" >&2; exit 2; }
+done
+case $n$k in *[!0-9]*) echo "REVIEW and ROUND must be whole numbers" >&2; exit 2 ;; esac
+
+rundir=".software-factory/runs/$run"
+[ -d "$rundir" ] || { echo "no run folder: $rundir (run from the repo root)" >&2; exit 2; }
+[ -f ".software-factory/specs/SPEC-$slug.md" ] || { echo "no spec: .software-factory/specs/SPEC-$slug.md" >&2; exit 2; }
+
+join() { # comma list -> ", "-separated, checking each path exists
+  local IFS=, out= p
+  for p in $1; do
+    p=${p# }; p=${p% }
+    [ -n "$p" ] || continue
+    [ -f "$p" ] || { echo "no such file: $p" >&2; exit 2; }
+    out="${out:+$out, }$p"
+  done
+  printf '%s' "${out:-none}"
+}
+plan_list=$(join "$plans")
+[ "$plan_list" != none ] || { echo "no plans given" >&2; exit 2; }
+prereq_list=$(join "$prereq")
+
+# Lenses: engineering always, then the others in a fixed order, no repeats.
+want=",engineering,${lenses},"
+lens_files=()
+for l in engineering design devex; do
+  case $want in *",$l,"*) lens_files+=("$here/references/lenses/$l.md") ;; esac
+done
+rest=$(printf '%s' "$lenses" | tr ',' '\n' | grep -v -x -e engineering -e design -e devex -e '' || true)
+[ -z "$rest" ] || { echo "unknown lens: $rest (use engineering, design, devex)" >&2; exit 2; }
+if [ -n "$round1" ]; then
+  [ -f "$round1" ] || { echo "no such ROUND1_FILE: $round1" >&2; exit 2; }
+fi
+
+prompt=$(cat "$here/assets/reviewer-prompt.md")
+prompt=${prompt//\{\{RUN_ID\}\}/$run}
+prompt=${prompt//\{\{SLUG\}\}/$slug}
+prompt=${prompt//\{\{PLANS\}\}/$plan_list}
+prompt=${prompt//\{\{PREREQ_PLANS\}\}/$prereq_list}
+
+out="$rundir/plan-review-prompt-$n-$k.md"
+{
+  printf '%s\n' "$prompt"
+  for f in "${lens_files[@]}"; do
+    echo
+    cat "$f"
+  done
+  echo
+  # The module-design checks: from their heading to the next "## " heading.
+  awk '/^## Checks on an Interfaces block/{on=1; print; next} on && /^## /{exit} on' \
+    "$here/references/module-design.md"
+  if [ -n "$round1" ]; then
+    echo
+    echo "## Round 1 (data)"
+    echo
+    cat "$round1"
+  fi
+} > "$out"
+
+echo "wrote $out: lenses $(printf '%s ' "${lens_files[@]##*/}")"

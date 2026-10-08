@@ -1,0 +1,389 @@
+#!/usr/bin/env bash
+# cap-lint: deterministic checks on a capability spec (SPEC-<slug>.md):
+# CAP-<n> IDs well-formed, unique, ordered, complete, never renumbered and
+# never reused after retirement; plus leftover template placeholders.
+#
+# Usage: bash cap-lint <spec> [--decisions <path>] [--base <ref> | --base none]
+#   --decisions  decision log (default .software-factory/decisions.md)
+#   --base       commit to compare with (default HEAD); none skips it
+# Run from the repository root. Needs node.
+# Exit:  0 clean (notes allowed), 1 problems or placeholders, 2 usage error
+
+if ! command -v node >/dev/null 2>&1; then
+	echo "cap-lint: node is required" >&2
+	exit 2
+fi
+
+exec node - "$@" <<'JS'
+'use strict';
+const fs = require('fs');
+const path = require('path');
+const { execFileSync } = require('child_process');
+
+const USAGE = [
+  'usage: cap-lint <spec> [--decisions <path>] [--base <ref> | --base none]',
+  '  <spec>        the spec file, named SPEC-<slug>.md',
+  '  --decisions   decision log (default .software-factory/decisions.md)',
+  '  --base        commit to compare with (default HEAD); "none" skips it',
+].join('\n');
+
+function usage(msg) {
+  if (msg) process.stderr.write(`cap-lint: ${msg}\n`);
+  process.stderr.write(USAGE + '\n');
+  process.exit(2);
+}
+
+// ---- arguments ------------------------------------------------------------
+
+const argv = process.argv.slice(2);
+let specArg = null;
+let decisionsPath = '.software-factory/decisions.md';
+let baseRef = 'HEAD';
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  if (a === '--decisions' || a === '--base') {
+    if (i + 1 >= argv.length) usage(`${a} needs a value`);
+    if (a === '--decisions') decisionsPath = argv[++i];
+    else baseRef = argv[++i];
+  } else if (a.startsWith('-')) {
+    usage(a === '-h' || a === '--help' ? '' : `unknown option: ${a}`);
+  } else if (specArg === null) {
+    specArg = a;
+  } else {
+    usage('exactly one spec file expected');
+  }
+}
+if (specArg === null) usage('no spec file given');
+
+let specStat;
+try {
+  specStat = fs.statSync(specArg);
+} catch (e) {
+  usage(`no such file: ${specArg}`);
+}
+if (!specStat.isFile()) usage(`not a regular file: ${specArg}`);
+const specId = path.basename(specArg).replace(/\.md$/, '');
+if (!specId.startsWith('SPEC-')) usage(`the file name should be SPEC-<slug>.md: ${specArg}`);
+
+let currentText;
+try {
+  currentText = fs.readFileSync(specArg, 'utf8');
+} catch (e) {
+  process.stderr.write(`cap-lint: cannot read ${specArg}: ${e.message}\n`);
+  process.exit(2);
+}
+
+// ---- reading a spec -------------------------------------------------------
+
+const HTML_TAGS = new Set(
+  ('a abbr b bdi bdo blockquote br caption center cite col colgroup dd del details dfn div dl dt ' +
+    'em figcaption figure font h1 h2 h3 h4 h5 h6 hr i img ins kbd li mark ol p picture pre q s samp ' +
+    'span strike strong sub summary sup table tbody td tfoot th thead tr tt u ul wbr').split(' ')
+);
+
+function isPlaceholderAngle(inner) {
+  if (/^(https?|mailto):/i.test(inner)) return false;
+  const m = /^([A-Za-z][A-Za-z0-9]*)(\s[^]*)?\/?$/.exec(inner);
+  if (m && HTML_TAGS.has(m[1].toLowerCase())) return false;
+  return true;
+}
+
+function hasPlaceholder(line) {
+  const text = line.replace(/[“”]/g, '"').replace(/"[^"]*"/g, '');
+  const angle = /<([A-Za-z][^<>]*)>/g;
+  let m;
+  while ((m = angle.exec(text))) {
+    if (isPlaceholderAngle(m[1])) return true;
+  }
+  if (/(^|[^A-Za-z0-9_])(TBD|TODO|FIXME|XXX)(?![A-Za-z0-9_])/.test(text)) return true;
+  if (text.includes('???')) return true;
+  if (text.includes('YYYY-MM-DD')) return true;
+  if (/(^|[^A-Za-z0-9])NNNN(?![A-Za-z0-9])/.test(text)) return true;
+  if (/\*\*[^*]+:\*\*\s*(\.\.\.|…)\s*$/.test(text)) return true;
+  if (/^\s*\d+\.\s*(\.\.\.|…)\s*$/.test(text)) return true;
+  return false;
+}
+
+const FENCE = /^\s*(```|~~~)/;
+const CAP_HEADING = /^#{3,}\s*CAP-(\d+)(?![A-Za-z0-9_])(.*)$/;
+const RETIRED_ITEM = /^\s*[-*]\s+CAP-(\d+)(?![A-Za-z0-9_])/;
+
+function parseSpec(text, wantPlaceholders) {
+  const lines = text.split('\n').map((l) => l.replace(/\r$/, ''));
+  const result = { caps: [], retired: [], placeholders: [] };
+
+  let frontEnd = -1;
+  if (lines.length && /^---\s*$/.test(lines[0])) {
+    for (let i = 1; i < lines.length; i++) {
+      if (/^---\s*$/.test(lines[i])) {
+        frontEnd = i;
+        break;
+      }
+    }
+  }
+
+  let inFence = false;
+  let inComment = false;
+  let section = '';
+  let cap = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const lineNo = i + 1;
+    let line = lines[i];
+
+    if (inFence) {
+      if (FENCE.test(line)) inFence = false;
+      continue;
+    }
+    const startedInComment = inComment;
+    if (inComment) {
+      const end = line.indexOf('-->');
+      if (end < 0) continue;
+      line = line.slice(end + 3);
+      inComment = false;
+    }
+    if (!startedInComment && FENCE.test(line)) {
+      inFence = true;
+      continue;
+    }
+    // remove HTML comments on this line, possibly opening a multi-line one
+    let out = '';
+    let rest = line;
+    for (;;) {
+      const open = rest.indexOf('<!--');
+      if (open < 0) {
+        out += rest;
+        break;
+      }
+      out += rest.slice(0, open);
+      const close = rest.indexOf('-->', open + 4);
+      if (close < 0) {
+        inComment = true;
+        break;
+      }
+      rest = rest.slice(close + 3);
+    }
+    line = out.replace(/`[^`]*`/g, '');
+
+    const inFront = frontEnd > 0 && i <= frontEnd;
+    if (inFront && i > 0 && i < frontEnd) line = line.replace(/\s#.*$/, '');
+
+    if (wantPlaceholders && !(inFront && (i === 0 || i === frontEnd)) && hasPlaceholder(line)) {
+      result.placeholders.push({ line: lineNo, text: line.trim().slice(0, 120) });
+    }
+    if (inFront) continue;
+
+    if (/^#/.test(line)) {
+      cap = null;
+      if (/^##(?!#)/.test(line)) {
+        section = line.replace(/^##/, '').trim().toLowerCase();
+        continue;
+      }
+      const m = CAP_HEADING.exec(line);
+      if (m) {
+        const name = m[2].replace(/^\s*:/, '').trim().toLowerCase();
+        cap = {
+          line: lineNo,
+          digits: m[1],
+          num: parseInt(m[1], 10),
+          name,
+          intent: false,
+          success: false,
+          checks: 0,
+          inSuccess: false,
+        };
+        result.caps.push(cap);
+      }
+      continue;
+    }
+
+    if (section === 'retired') {
+      const m = RETIRED_ITEM.exec(line);
+      if (m) result.retired.push({ line: lineNo, num: parseInt(m[1], 10) });
+    }
+
+    if (cap) {
+      if (line.includes('**Intent:**')) cap.intent = true;
+      if (line.includes('**Success:**')) {
+        cap.success = true;
+        cap.inSuccess = true;
+        continue;
+      }
+      if (cap.inSuccess) {
+        if (/^\s*\d+\.\s+\S/.test(line)) cap.checks++;
+        else if (/^\s*[-*]\s+\*\*/.test(line)) cap.inSuccess = false;
+      }
+    }
+  }
+  return result;
+}
+
+const current = parseSpec(currentText, true);
+const P = specArg;
+
+// ---- inline checks (file order) -------------------------------------------
+
+const inline = []; // { line, rank, text }
+let problems = 0;
+const problemAt = (line, msg) => {
+  problems++;
+  return `problem: ${P}:${line}: ${msg}`;
+};
+
+for (const ph of current.placeholders) {
+  inline.push({ line: ph.line, rank: 0, text: `placeholder: ${P}:${ph.line}: ${ph.text}` });
+}
+const firstSeen = new Map();
+let highest = null;
+for (const c of current.caps) {
+  if (c.digits.length > 1 && c.digits.startsWith('0')) {
+    inline.push({ line: c.line, rank: 1, text: problemAt(c.line, `CAP-${c.digits} is not canonical; write CAP-${c.num}`) });
+  }
+  if (firstSeen.has(c.num)) {
+    inline.push({
+      line: c.line,
+      rank: 2,
+      text: problemAt(c.line, `CAP-${c.num} repeats the ID first used at line ${firstSeen.get(c.num)}`),
+    });
+  } else {
+    firstSeen.set(c.num, c.line);
+  }
+  if (highest !== null && c.num <= highest) {
+    inline.push({
+      line: c.line,
+      rank: 3,
+      text: problemAt(c.line, `CAP-${c.num} is out of order; IDs must increase (highest so far CAP-${highest})`),
+    });
+  }
+  if (highest === null || c.num > highest) highest = c.num;
+}
+inline.sort((a, b) => a.line - b.line || a.rank - b.rank);
+const output = inline.map((x) => x.text);
+
+// ---- decision log ---------------------------------------------------------
+
+let logExists = false;
+const logRetired = new Map(); // num -> line
+try {
+  const logText = fs.readFileSync(decisionsPath, 'utf8');
+  logExists = true;
+  const esc = specId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const idRe = new RegExp(`(^|[^A-Za-z0-9_-])${esc}(?![A-Za-z0-9_-])`);
+  logText.split('\n').forEach((raw, i) => {
+    const line = raw.replace(/\r$/, '');
+    if (!idRe.test(line)) return;
+    const at = line.indexOf('retired:');
+    if (at < 0) return;
+    const m = /CAP-(\d+)(?![A-Za-z0-9_])/.exec(line.slice(at + 8));
+    if (m) logRetired.set(parseInt(m[1], 10), i + 1);
+  });
+} catch (e) {
+  logExists = false;
+}
+
+// ---- committed version ----------------------------------------------------
+
+let committed = null;
+if (baseRef !== 'none') {
+  try {
+    const opts = { stdio: ['ignore', 'pipe', 'ignore'], encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 };
+    const sha = execFileSync('git', ['rev-parse', '--verify', '-q', `${baseRef}^{commit}`], opts).trim();
+    let rel = path.relative(process.cwd(), path.resolve(specArg)).split(path.sep).join('/');
+    const text = execFileSync('git', ['show', `${sha}:./${rel}`], opts);
+    const parsed = parseSpec(text, false);
+    if (parsed.caps.length > 0 || parsed.retired.length > 0) committed = parsed;
+  } catch (e) {
+    committed = null;
+  }
+}
+
+// ---- per-capability checks ------------------------------------------------
+
+const retiredNow = new Map();
+for (const r of current.retired) if (!retiredNow.has(r.num)) retiredNow.set(r.num, r.line);
+const currentNums = new Set(current.caps.map((c) => c.num));
+
+let oldHeadings = null;
+let oldRetired = null;
+let highestUsed = null;
+if (committed) {
+  oldHeadings = new Map();
+  for (const c of committed.caps) if (!oldHeadings.has(c.num)) oldHeadings.set(c.num, c.name);
+  oldRetired = new Set(committed.retired.map((r) => r.num));
+  highestUsed = Math.max(...committed.caps.map((c) => c.num), ...committed.retired.map((r) => r.num));
+}
+
+for (const c of current.caps) {
+  const id = `CAP-${c.num}`;
+  if (!c.intent) output.push(problemAt(c.line, `${id} has no **Intent:**`));
+  if (!c.success) output.push(problemAt(c.line, `${id} has no **Success:**`));
+  else if (c.checks === 0) output.push(problemAt(c.line, `${id} has **Success:** but no numbered check`));
+  if (retiredNow.has(c.num)) {
+    output.push(problemAt(c.line, `${id} is a heading and also listed under Retired (line ${retiredNow.get(c.num)})`));
+  }
+  if (logRetired.has(c.num)) {
+    output.push(
+      problemAt(c.line, `${id} reuses an ID retired in ${decisionsPath}:${logRetired.get(c.num)}; use a new ID`)
+    );
+  }
+  if (!committed) continue;
+  const wasHeading = oldHeadings.has(c.num);
+  const wasRetired = oldRetired.has(c.num);
+  if (wasRetired && !wasHeading) {
+    output.push(problemAt(c.line, `${id} was retired in the committed version and has come back; use a new ID`));
+  }
+  if (!wasHeading && !wasRetired && c.num <= highestUsed) {
+    output.push(problemAt(c.line, `new ${id} must be higher than CAP-${highestUsed}, the highest ID used so far`));
+  }
+  if (wasHeading && oldHeadings.get(c.num) !== c.name) {
+    output.push(
+      `note: ${P}:${c.line}: ${id} renamed from "${oldHeadings.get(c.num)}" to "${c.name}"; ` +
+        'if its meaning changed, retire it and add a new ID'
+    );
+  }
+  if (!wasHeading && c.name !== '') {
+    for (const [num, name] of oldHeadings) {
+      if (name === c.name && !currentNums.has(num)) {
+        output.push(problemAt(c.line, `${id} looks renumbered from CAP-${num} ("${name}"); IDs never change`));
+        break;
+      }
+    }
+  }
+}
+
+// ---- retired without a log line -------------------------------------------
+
+for (const r of current.retired) {
+  if (!logRetired.has(r.num)) {
+    output.push(
+      problemAt(
+        r.line,
+        `CAP-${r.num} is under Retired but ${decisionsPath} has no "retired: CAP-${r.num}" line for ${specId}` +
+          (logExists ? '' : ' (file missing)')
+      )
+    );
+  }
+}
+
+// ---- disappeared IDs ------------------------------------------------------
+
+if (committed) {
+  for (const [num, name] of oldHeadings) {
+    if (!currentNums.has(num) && !retiredNow.has(num)) {
+      problems++;
+      output.push(
+        `problem: ${P}: CAP-${num} ("${name}") disappeared; retire it under ## Retired instead of deleting it`
+      );
+    }
+  }
+}
+
+const placeholders = current.placeholders.length;
+const capCount = currentNums.size;
+output.push(
+  `cap-lint: ${capCount} capabilities, ${problems} problem(s), ${placeholders} placeholder(s)` +
+    (committed ? '' : ' (no committed version to compare)')
+);
+process.stdout.write(output.join('\n') + '\n');
+process.exitCode = problems > 0 || placeholders > 0 ? 1 : 0;
+JS

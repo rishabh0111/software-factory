@@ -1,0 +1,13 @@
+{
+  "name": "software-factory",
+  "version": "0.1.0",
+  "description": "One set of agent skills that takes software work from an idea to production: spec, plan, build, verify, review, merge and deploy.",
+  "author": {
+    "name": "Rishabh Sharma",
+    "url": "https://github.com/rishabh0111"
+  },
+  "homepage": "https://github.com/rishabh0111/software-factory",
+  "repository": "https://github.com/rishabh0111/software-factory",
+  "license": "MIT",
+  "keywords": ["skills", "workflow", "issues", "github", "gitlab", "setup"]
+}

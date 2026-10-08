@@ -1,0 +1,16 @@
+{
+  "name": "software-factory",
+  "owner": {
+    "name": "Rishabh Sharma",
+    "url": "https://github.com/rishabh0111"
+  },
+  "description": "software-factory skills as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "software-factory",
+      "source": "./",
+      "description": "One set of agent skills that takes software work from an idea to production.",
+      "category": "engineering"
+    }
+  ]
+}

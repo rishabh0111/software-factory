@@ -1,0 +1,8 @@
+# Scripts must keep LF endings or bash and node fail on checkout under Windows.
+*.sh text eol=lf
+*.mjs text eol=lf
+skills/sf-build/scripts/review-package text eol=lf
+skills/sf-plan/scripts/plan-review-prompt text eol=lf
+skills/sf-spec/scripts/cap-lint text eol=lf
+skills/sf-plan/scripts/tickets-check text eol=lf
+skills/sf-spec/scripts/spec-check-prompt text eol=lf

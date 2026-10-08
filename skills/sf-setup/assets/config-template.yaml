@@ -1,0 +1,100 @@
+# Written by the sf-setup skill. Every software-factory skill reads this file.
+# Edit it directly, or re-run sf-setup to change an answer.
+# Use `none` for a command the project doesn't need, `unknown` for a value nobody knows yet, and `pending` for a step that still needs a person
+# (installing, signing in, hooks, agent config, branch protection); list its finishing command under `pending:`.
+
+version: 2                # sf-setup's config schema; the conductor runs `sf-setup upgrade` when this is lower than the template's
+
+tracker:
+  kind: github            # github | gitlab | local | other
+  host: github.com        # e.g. gitlab.com, gitlab.example.com, 10.0.0.5:8929
+  project: owner/repo     # forge project path; empty for local
+  cli: gh                 # gh | glab | none
+  signed_in: true         # true | pending | n/a (local tracker, or other with no CLI)
+  local_dir: ""           # for kind: local, e.g. .software-factory/issues
+  notes: ""               # for kind: other, the user's description, as written
+  labels: {}              # optional: triage role -> this tracker's label, e.g. {ready-for-agent: "status: ready", wontfix: "not planned"}.
+                          # Roles: bug, enhancement, needs-triage, needs-info, ready-for-agent, ready-for-human, duplicate, wontfix.
+                          # sf-triage reads this before its synonym table. Edit the right-hand side to match your labels.
+
+code:
+  default_branch: main
+  branch_protected: false # true | false | pending
+  longpaths: n/a          # Windows only, repo-local git config core.longpaths: true | false | n/a (unattended setup sets true)
+  ci: missing             # present | missing | pending: a CI job runs the tests on every PR/MR (pending: not added yet, or added and not yet seen green on a PR/MR; its finish step is under pending:)
+  ci_files: []            # the CI files found or added, e.g. [.github/workflows/ci.yml]
+  dependency_bot: none    # renovate | dependabot | none | pending
+
+commands:                 # taken from the repo's files and confirmed by the user; none = not needed, unknown = not found
+  install: unknown
+  build: unknown
+  test: unknown
+  lint: unknown
+  typecheck: unknown
+  run: unknown            # how to start the app locally
+  deploy: unknown         # the command that deploys, for deploy.trigger: manual-command; none otherwise; unknown means sf-ship stops at merge
+  eval: unknown           # prompt or model evals (e.g. "npx promptfoo eval"); none when the repo has no prompts or a person says it has no evals
+                          # If the runner can select by changed files, record that form.
+
+baseline:                 # each confirmed command run once on the default branch by sf-setup
+  commit: unknown         # the default branch commit it ran on
+  install: unknown        # pass | "fail: <one-line signature>"; unknown until taken; no line for a none or unknown command
+  build: unknown
+  lint: unknown
+  typecheck: unknown
+  test: unknown
+
+deploy:                   # how a merged change reaches production; read by sf-ship
+  trigger: unknown        # none | on-merge | manual-command | unknown. on-merge: merging deploys (platform auto-deploy or a workflow on the default branch);
+                          # manual-command: someone runs commands.deploy; none: nothing deploys (library, CLI)
+  platform: none          # fly | render | vercel | netlify | heroku | railway | workflow | other | none: a hint from files, confirmed by the user
+  workflows: []           # deploy workflow files and their branch filters, e.g. [".github/workflows/deploy.yml (push: main)"]
+  status: unknown         # read-only command that shows the latest deploy's state, e.g. "gh run list --workflow deploy.yml --limit 1 --json headSha,status,conclusion"
+  health_url: unknown     # URL that answers 2xx when production is healthy, e.g. https://app.example.com/health
+  validated: unknown      # "YYYY-MM-DD pass" | "YYYY-MM-DD fail: <one line>" | unknown: setup's read-only dry run of status and health_url
+
+app:
+  local_url: unknown      # where `run` serves the app, e.g. http://localhost:3000
+  production_url: unknown # checked after a deploy; unknown means a person checks
+  staging_url: unknown    # a pre-production copy, if there is one; none when there isn't
+  errors_command: unknown # read-only command that lists recent production errors after a deploy (e.g. "sentry-cli issues list --project app"); none | unknown
+
+tools:
+  docker: skipped         # ready | not-running | pending | skipped
+  browser_mcp: none       # chrome-devtools | playwright | none | pending; a name only after a real call worked
+  browser_status: n/a     # ready | "failed: <one-line error>" | n/a: result of setup's test call (list pages)
+  second_opinion: none    # codex | gemini | opencode | claude | none: another agent CLI used as an independent reviewer
+  pre_commit: none        # husky | pre-commit | lefthook | existing | none | pending: local commit hooks (skippable; CI is the gate)
+  agent_guard: none       # claude-code | opencode | codex | manual | none | pending: destructive-command rules in the agent's config (best-effort)
+  browser_isolated: n/a   # true | false | unknown | n/a: the browser MCP starts a fresh temporary profile each session (--isolated).
+                          # unknown: the server's launch arguments can't be read from this session
+  scanners: []            # installed scanners stages run on a run's diff: gitleaks | osv-scanner | npm-audit | pip-audit.
+                          # Listed = installed and working; a pending install is under pending:, not here; [] = none.
+
+holdouts:
+  dir: ~/.software-factory/holdouts/<project-slug>   # outside the repo, so the builder doesn't see them; sf-setup writes the repo folder name and creates it
+
+policy:                   # what agents may do without asking: auto | manual | never
+  implement: auto
+  open_pr: auto
+  merge: manual
+  deploy: manual          # with deploy.trigger: on-merge, merging deploys, so a merge needs this permission too
+  comment: auto           # tracker and PR/MR comments and labels written by triage and other stages
+  close: manual           # closing tracker items (duplicates, confirmed rejections)
+
+limits:
+  max_fix_rounds: 5       # fix rounds per ticket before findings are parked for a human
+  max_pr_lines: 400       # changed lines per PR/MR before the plan must split it
+  evidence_max_age_h: 24  # a verify record older than this is re-run before it counts
+  merge_soak_minutes: 0   # the PR/MR head and its CI result must stay unchanged this long before an auto merge; 0 = no wait
+
+quality:                  # optional project bar; a stage uses its own default when a value is missing. Give a reason per value.
+  mutation_threshold: default    # mutation score floor on changed lines, percent; e.g. 70  # payments code needs strong tests
+  perf_threshold_pct: default    # allowed slowdown before the performance gate fails, percent; e.g. 10  # p95 budget
+  changed_line_coverage: default # coverage floor on changed lines, percent; e.g. 80  # matches CI
+
+pending: []               # steps left for a person, e.g.
+#  - item: tools.agent_guard
+#    finish: re-run sf-setup attended and answer the agent guard question
+#  - item: tools.browser_mcp
+#    finish: start the browser, call list_pages once from the main session, re-run sf-setup

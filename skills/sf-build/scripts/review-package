@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# review-package: write one file with everything a reviewer needs for a task's
+# change: the plan path, the commits in BASE..HEAD, a per-file summary and the
+# net diff between the two commits with 10 lines of context.
+#
+# Usage: bash review-package PLAN_FILE BASE HEAD OUTFILE
+# Exit:  0 written, 2 bad arguments or git failure, 3 empty or unrelated range
+
+USAGE='usage: review-package PLAN_FILE BASE HEAD OUTFILE'
+tmp_out=""
+
+cleanup() {
+	[ -n "$tmp_out" ] && rm -f "$tmp_out"
+}
+trap cleanup EXIT
+trap 'cleanup; trap - EXIT; exit 130' INT TERM
+
+fail() {
+	printf 'review-package: %s\n' "$1" >&2
+	exit "${2:-2}"
+}
+
+if [ "$#" -ne 4 ]; then
+	printf '%s\n' "$USAGE" >&2
+	if [ "$#" -eq 3 ]; then
+		printf '%s\n' "the fourth argument OUTFILE is required, e.g. runs/<run-id>/review/T1-r0.diff" >&2
+	fi
+	exit 2
+fi
+
+plan=$1
+base_arg=$2
+head_arg=$3
+out=$4
+
+if [ -z "$out" ]; then
+	printf 'review-package: OUTFILE is empty\n%s\n' "$USAGE" >&2
+	exit 2
+fi
+[ -f "$plan" ] || fail "no such plan file: $plan"
+
+base=$(git rev-parse --verify -q "$base_arg^{commit}" 2>/dev/null) || base=""
+[ -n "$base" ] || fail "bad BASE: $base_arg"
+head=$(git rev-parse --verify -q "$head_arg^{commit}" 2>/dev/null) || head=""
+[ -n "$head" ] || fail "bad HEAD: $head_arg"
+
+git merge-base --is-ancestor "$base" "$head" 2>/dev/null
+status=$?
+case "$status" in
+	0) ;;
+	1) fail "HEAD is not a descendant of BASE: $base_arg..$head_arg" 3 ;;
+	*) fail "ancestry check failed (git exit $status) for $base_arg..$head_arg" ;;
+esac
+
+count=$(git rev-list --count "$base..$head" -- 2>/dev/null) || fail "cannot count commits in $base_arg..$head_arg"
+case "$count" in
+	'' | *[!0-9]*) fail "cannot count commits in $base_arg..$head_arg" ;;
+esac
+[ "$count" -gt 0 ] || fail "empty commit range: $base_arg..$head_arg" 3
+
+out_dir=$(dirname "$out")
+mkdir -p "$out_dir" 2>/dev/null || fail "cannot create folder: $out_dir"
+tmp_out="$out.tmp.$$"
+
+{
+	printf '# Review package: %s..%s\n\n' "$base_arg" "$head_arg" &&
+		printf 'Plan: %s\n\n' "$plan" &&
+		printf '## Commits\n' &&
+		git -c core.quotepath=false log --no-color --format='%h %s' "$base..$head" -- &&
+		printf '\n## Files changed\n' &&
+		git -c core.quotepath=false diff --no-color --stat "$base" "$head" -- &&
+		printf '\n## Diff\n' &&
+		git -c core.quotepath=false diff --no-color --no-ext-diff -U10 "$base" "$head" --
+} >"$tmp_out" 2>/dev/null || fail "git failed while writing $out"
+
+mv -f "$tmp_out" "$out" 2>/dev/null || fail "cannot write $out"
+tmp_out=""
+
+bytes=$(wc -c <"$out" | tr -d ' ')
+printf 'wrote %s: %s commit(s), %s bytes\n' "$out" "$count" "$bytes"
+exit 0
