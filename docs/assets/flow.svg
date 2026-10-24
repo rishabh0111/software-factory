@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1588 430" width="1588" height="430" role="img" aria-labelledby="flow-title flow-desc">
+<title id="flow-title">One common path from idea to ship</title>
+<desc id="flow-desc">One common path, not a fixed pipeline: each step also runs on its own. Once per repository, /sf-setup writes docs/agents/*. A feature often runs left to right: /sf-start, /sf-align, /sf-plan (which writes docs/plans/&lt;date&gt;-&lt;feature&gt;.md), /sf-execute, /sf-code-review, /sf-qa if the work has a screen, /sf-ship, and optionally /sf-learn, which saves lessons to docs/solutions/. Under /sf-execute, three disciplines apply on their own: tdd, red then green; verify, output before "done"; and debug, a failing check before a fix. A tiny fix skips the path: you just ask, and the same disciplines apply. A small change bypasses the path: plan mode, then /sf-implement, then /sf-ship. A big project enters before /sf-plan through /sf-decision-map, then /sf-plan, with /sk-handoff between sessions. At /sf-ship you choose: merge locally, open a pull request, or keep the branch.</desc>
+<style>
+:root { color-scheme: light dark; }
+text { font-family: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif; fill: #121719; font-size: 15px; }
+.mono { font-family: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, Menlo, monospace; }
+.b { font-weight: 650; }
+.muted { fill: #4A555B; }
+.sm { font-size: 13px; }
+.xs { font-size: 12px; }
+.h { font-size: 20px; }
+.ink { fill: #121719; }
+.block { fill: #F3F5F6; stroke: #77838A; stroke-width: 1.5; }
+.box { fill: #FFFFFF; stroke: #77838A; stroke-width: 1.5; }
+.opt { fill: #FFFFFF; stroke: #77838A; stroke-width: 1.5; stroke-dasharray: 5 4; }
+.key { fill: #E2F1EA; stroke: #0B6A4C; stroke-width: 2; }
+.gate { fill: #FBEFD9; stroke: #8A5300; stroke-width: 2; }
+.gatei { fill: none; stroke: #8A5300; stroke-width: 2.5; stroke-linecap: round; }
+.warn { fill: #8A5300; }
+.acc { fill: #0B6A4C; }
+.line { fill: none; stroke: #77838A; stroke-width: 1.75; }
+.dash { fill: none; stroke: #77838A; stroke-width: 1.75; stroke-dasharray: 6 5; }
+.aline { fill: none; stroke: #0B6A4C; stroke-width: 2.25; }
+.head { fill: #77838A; }
+.ahead { fill: #0B6A4C; }
+.red { fill: #B42318; }
+.green { fill: #0B6A4C; }
+.icon { fill: #FFFFFF; stroke: #4A555B; stroke-width: 1.5; stroke-linejoin: round; }
+.iconl { fill: none; stroke: #4A555B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-color-scheme: dark) {
+  text, .ink { fill: #E8EDEF; }
+  .muted { fill: #A9B4BA; }
+  .block { fill: #161B1E; stroke: #7D8A91; }
+  .box, .opt { fill: #0E1214; stroke: #7D8A91; }
+  .key { fill: #13342A; stroke: #5BD0A0; }
+  .gate { fill: #3A2C12; stroke: #F2B755; }
+  .gatei { stroke: #F2B755; }
+  .warn { fill: #F2B755; }
+  .acc, .green { fill: #5BD0A0; }
+  .red { fill: #FF8A7A; }
+  .line, .dash { stroke: #7D8A91; }
+  .head { fill: #7D8A91; }
+  .aline { stroke: #5BD0A0; }
+  .ahead { fill: #5BD0A0; }
+  .icon { fill: #0E1214; stroke: #A9B4BA; }
+  .iconl { stroke: #A9B4BA; }
+}
+</style>
+<defs>
+<marker id="f-h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="head" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<!-- small change bypass -->
+<path class="dash" d="M272,170 V58 H1316 V166" marker-end="url(#f-h)"/>
+<rect class="box" x="584" y="38" width="420" height="40" rx="6"/>
+<text x="794" y="63" text-anchor="middle"><tspan class="b">Small change:</tspan> plan mode → <tspan class="mono b">/sf-implement</tspan></text>
+<!-- big project -->
+<rect class="box" x="322" y="92" width="400" height="54" rx="6"/>
+<text x="338" y="115"><tspan class="b">Big project:</tspan> <tspan class="mono">/sf-decision-map</tspan> → <tspan class="mono">/sf-plan</tspan></text>
+<text x="338" y="136" class="sm muted">with <tspan class="mono">/sk-handoff</tspan> between sessions</text>
+<path class="line" d="M620,146 V166" marker-end="url(#f-h)"/>
+<rect class="opt" x="20" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="98" y="198" text-anchor="middle">/sf-setup</text>
+<text class="muted sm" x="98" y="236" text-anchor="middle">once per repo</text>
+<path class="dash" d="M176,193 H191" marker-end="url(#f-h)"/>
+<rect class="key" x="194" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="272" y="198" text-anchor="middle">/sf-start</text>
+<path class="line" d="M350,193 H365" marker-end="url(#f-h)"/>
+<rect class="box" x="368" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="446" y="198" text-anchor="middle">/sf-align</text>
+<path class="line" d="M524,193 H539" marker-end="url(#f-h)"/>
+<rect class="box" x="542" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="620" y="198" text-anchor="middle">/sf-plan</text>
+<path class="line" d="M698,193 H713" marker-end="url(#f-h)"/>
+<rect class="box" x="716" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="794" y="198" text-anchor="middle">/sf-execute</text>
+<path class="line" d="M872,193 H887" marker-end="url(#f-h)"/>
+<rect class="box" x="890" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="968" y="198" text-anchor="middle">/sf-code-review</text>
+<path class="line" d="M1046,193 H1061" marker-end="url(#f-h)"/>
+<rect class="box" x="1064" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="1142" y="198" text-anchor="middle">/sf-qa</text>
+<text class="muted sm" x="1142" y="236" text-anchor="middle">if it has a screen</text>
+<path class="line" d="M1220,193 H1235" marker-end="url(#f-h)"/>
+<rect class="box" x="1238" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="1316" y="198" text-anchor="middle">/sf-ship</text>
+<path class="line" d="M1394,193 H1409" marker-end="url(#f-h)"/>
+<rect class="box" x="1412" y="170" width="156" height="46" rx="6"/><text class="mono b" style="font-size:14px" x="1490" y="198" text-anchor="middle">/sf-learn</text>
+<text class="muted sm" x="1490" y="236" text-anchor="middle">optional</text>
+<!-- artifacts -->
+<path class="icon" d="M24,250 h10 l5,5 v15 h-15 z"/><path class="iconl" d="M34,250 v5 h5"/><text class="mono xs" x="45" y="265">docs/agents/*</text>
+<path class="icon" d="M546,250 h10 l5,5 v15 h-15 z"/><path class="iconl" d="M556,250 v5 h5"/><text class="mono xs" x="567" y="261">docs/plans/</text><text class="mono xs" x="567" y="277">&lt;date&gt;-&lt;feature&gt;.md</text>
+<path class="icon" d="M1416,250 h10 l5,5 v15 h-15 z"/><path class="iconl" d="M1426,250 v5 h5"/><text class="mono xs" x="1437" y="265">docs/solutions/</text>
+<!-- disciplines -->
+<path class="dash" d="M794,216 V300"/>
+<rect class="key" x="584" y="300" width="420" height="110" rx="8"/>
+<text class="b" x="600" y="324">Applies on its own</text>
+<text class="mono b" x="600" y="352">tdd</text>
+<rect class="red" x="600" y="364" width="12" height="12" rx="2"/><text class="sm" x="618" y="375">red →</text>
+<rect class="green" x="658" y="364" width="12" height="12" rx="2"/><text class="sm" x="676" y="375">green</text>
+<text class="mono b" x="736" y="352">verify</text>
+<text class="sm" x="736" y="375">output before</text><text class="sm" x="736" y="393">“done”</text>
+<text class="mono b" x="870" y="352">debug</text>
+<text class="sm" x="870" y="375">failing check</text><text class="sm" x="870" y="393">before fix</text>
+<!-- tiny fix -->
+<rect class="box" x="360" y="334" width="180" height="40" rx="6"/>
+<text x="450" y="359" text-anchor="middle"><tspan class="b">Tiny fix:</tspan> just ask</text>
+<path class="line" d="M540,354 H580" marker-end="url(#f-h)"/>
+<!-- ship fork -->
+<path class="line" d="M1316,216 V300"/>
+<circle class="acc" cx="1316" cy="300" r="4"/>
+<path class="line" d="M1316,300 C1316,330 1332,330 1346,330" marker-end="url(#f-h)"/>
+<path class="line" d="M1316,300 C1316,360 1332,362 1346,362" marker-end="url(#f-h)"/>
+<path class="line" d="M1316,300 C1316,392 1332,394 1346,394" marker-end="url(#f-h)"/>
+<text class="sm" x="1352" y="335">Merge locally</text>
+<text class="sm" x="1352" y="367">Open a pull request</text>
+<text class="sm" x="1352" y="399">Keep the branch</text>
+<g transform="translate(1250,312)"><circle class="icon" cx="12" cy="8" r="7"/><path class="icon" d="M0,34 v-6 a12,10 0 0 1 24,0 v6 z"/></g>
+<text class="b sm" x="1262" y="366" text-anchor="middle">You</text><text class="b sm" x="1262" y="382" text-anchor="middle">choose</text>
+</svg>

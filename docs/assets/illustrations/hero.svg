@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" role="img" aria-labelledby="sf-hero-t sf-hero-d">
+<title id="sf-hero-t">From idea to shipped</title>
+<desc id="sf-hero-d">A friendly robot agent works at a bench. An idea, shown as a light bulb, rides a belt through three arches, each topped with a green check: it becomes a plan sheet, then a built block, then a packed box, and leaves at the end as a taped, shipped box with its own green check.</desc>
+<style>
+:root { color-scheme: light dark; }
+.bd { fill: #F3F5F6; }
+.pp { fill: #FFFFFF; stroke: #C9D1D6; stroke-width: 2; }
+.pf { fill: #FFFFFF; }
+.pl { fill: none; stroke: #C9D1D6; stroke-width: 3.5; stroke-linecap: round; }
+.dk { fill: #CDD5DA; }
+.dk2 { fill: #E1E7EA; }
+.gr { fill: #3A454B; }
+.grs { fill: none; stroke: #3A454B; stroke-linecap: round; stroke-linejoin: round; }
+.scr { fill: #121719; }
+.eye { fill: #E8EDEF; }
+.mu { fill: #77838A; }
+.mus { fill: none; stroke: #77838A; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ok { fill: #0B6A4C; }
+.oks { fill: #E2F1EA; }
+.okl { fill: none; stroke: #0B6A4C; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ck { fill: none; stroke: #FFFFFF; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.no { fill: #B42318; }
+.nos { fill: #FBE4E1; }
+.wn { fill: #E3A83A; }
+.box { fill: #C99A62; }
+.box2 { fill: #A97C47; }
+.sl { fill: #4C6378; }
+.sla { fill: none; stroke: #4C6378; stroke-linecap: round; }
+.ink { fill: #121719; }
+.mono { font-family: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, Menlo, monospace; font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  .bd { fill: #161B1E; }
+  .pp { fill: #252D32; stroke: #3E4A50; }
+  .pf { fill: #252D32; }
+  .pl { stroke: #4E5B62; }
+  .dk { fill: #343E44; }
+  .dk2 { fill: #232A2E; }
+  .gr { fill: #56646C; }
+  .grs { stroke: #8C99A0; }
+  .scr { fill: #0B0F11; }
+  .mu { fill: #7D8A91; }
+  .mus { stroke: #7D8A91; }
+  .ok { fill: #5BD0A0; }
+  .oks { fill: #13342A; }
+  .okl { stroke: #5BD0A0; }
+  .ck { stroke: #062118; }
+  .no { fill: #FF8A7A; }
+  .nos { fill: #3D1C18; }
+  .sl { fill: #8EA3B8; }
+  .sla { stroke: #8EA3B8; }
+  .ink { fill: #E8EDEF; }
+}
+.ac { fill: #0B6A4C; }
+.acs { fill: none; stroke: #0B6A4C; stroke-linecap: round; stroke-linejoin: round; }
+.ar { fill: none; stroke: #0B6A4C; stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; }
+.ha { fill: #E2F1EA; }
+@media (prefers-color-scheme: dark) { .ac { fill: #5BD0A0; } .acs, .ar { stroke: #5BD0A0; } .ha { fill: #13342A; } }
+</style>
+
+<rect class="bd" x="8" y="8" width="704" height="404" rx="36"/><ellipse class="oks" cx="360" cy="220" rx="330" ry="170"/><path class="mus" style="stroke-width:6" d="M290,300V236a30,30 0 0 1 60,0V300"/><circle class="ok" cx="320" cy="176" r="15"/><path class="ck" style="stroke-width:4.4" d="M313.1,176.6l4.8,4.8l9.4,-10.0"/><path class="mus" style="stroke-width:2;stroke-dasharray:3 5" d="M320,192V204"/><path class="mus" style="stroke-width:6" d="M400,300V236a30,30 0 0 1 60,0V300"/><circle class="ok" cx="430" cy="176" r="15"/><path class="ck" style="stroke-width:4.4" d="M423.1,176.6l4.8,4.8l9.4,-10.0"/><path class="mus" style="stroke-width:2;stroke-dasharray:3 5" d="M430,192V204"/><path class="mus" style="stroke-width:6" d="M510,300V236a30,30 0 0 1 60,0V300"/><circle class="ok" cx="540" cy="176" r="15"/><path class="ck" style="stroke-width:4.4" d="M533.1,176.6l4.8,4.8l9.4,-10.0"/><path class="mus" style="stroke-width:2;stroke-dasharray:3 5" d="M540,192V204"/><g transform="translate(196,196) scale(1.2)"><path class="grs" style="stroke-width:4" d="M0,-30V-44"/><circle class="wn" cy="-48" r="6"/><rect class="gr" x="-10" y="20" width="20" height="16" rx="4"/><rect class="gr" x="-46" y="32" width="92" height="76" rx="20"/><rect class="scr" x="-20" y="50" width="40" height="22" rx="6"/><circle class="ok" cx="-8" cy="61" r="3.5"/><circle class="wn" cx="4" cy="61" r="3.5"/><circle class="eye" cx="13" cy="61" r="2"/><rect class="gr" x="-38" y="-32" width="76" height="58" rx="18"/><rect class="scr" x="-28" y="-22" width="56" height="38" rx="11"/><rect class="eye" x="-15" y="-12" width="8" height="13" rx="4"/><rect class="eye" x="7" y="-12" width="8" height="13" rx="4"/><path fill="none" stroke="#E8EDEF" stroke-width="2.5" stroke-linecap="round" d="M-6,7q6,4 12,0"/><rect class="gr" x="-44" y="-12" width="8" height="18" rx="4"/><rect class="gr" x="36" y="-12" width="8" height="18" rx="4"/></g><path fill="none" stroke="#000" stroke-opacity=".14" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" d="M240,250 L270,276 L292,276"/><path class="grs" style="stroke-width:13" d="M240,250 L270,276 L292,276"/><circle class="gr" cx="294" cy="276" r="9"/><path class="grs" style="stroke-width:13" d="M152,250L128,282"/><circle class="gr" cx="126" cy="284" r="9"/><rect class="dk2" x="70" y="318" width="580" height="50" rx="8"/><rect class="dk" x="36" y="298" width="648" height="22" rx="11"/><rect class="gr" x="62" y="286" width="606" height="12" rx="6"/><circle class="mu" cx="78" cy="292" r="3"/><circle class="mu" cx="114" cy="292" r="3"/><circle class="mu" cx="150" cy="292" r="3"/><circle class="mu" cx="186" cy="292" r="3"/><circle class="mu" cx="222" cy="292" r="3"/><circle class="mu" cx="258" cy="292" r="3"/><circle class="mu" cx="294" cy="292" r="3"/><circle class="mu" cx="330" cy="292" r="3"/><circle class="mu" cx="366" cy="292" r="3"/><circle class="mu" cx="402" cy="292" r="3"/><circle class="mu" cx="438" cy="292" r="3"/><circle class="mu" cx="474" cy="292" r="3"/><circle class="mu" cx="510" cy="292" r="3"/><circle class="mu" cx="546" cy="292" r="3"/><circle class="mu" cx="582" cy="292" r="3"/><circle class="mu" cx="618" cy="292" r="3"/><circle class="mu" cx="654" cy="292" r="3"/><circle class="wn" cx="92" cy="250" r="20"/><rect class="gr" x="83" y="266" width="18" height="16" rx="3"/><path class="pf" d="M86,250q6,-10 12,0" style="fill:none;stroke:#FFFFFF;stroke-width:3;stroke-linecap:round"/><path class="mus" d="M92,218v-8M66,232l-7,-5M118,232l7,-5M64,256h-8M120,256h8"/><g transform="rotate(-5 320 262)"><rect class="pp" x="300" y="236" width="40" height="50" rx="4"/><path class="pl" style="stroke-width:3" d="M308,250h24M308,260h16M308,270h20"/></g><path class="sl" d="M410,256l20,-10l20,10v26l-20,10l-20,-10z"/><path class="pf" style="fill-opacity:.35" d="M410,256l20,10l20,-10l-20,-10z"/><path fill="#000" fill-opacity=".18" d="M430,266v26l20,-10v-26z"/><rect class="box" x="518" y="250" width="44" height="36" rx="3"/><path class="box2" d="M518,250l-10,-12h20l6,12zM562,250l10,-12h-20l-6,12z"/><rect class="box" x="592" y="226" width="66" height="60" rx="4"/><rect class="box2" x="592" y="226" width="66" height="12" rx="3"/><rect class="pf" x="620" y="226" width="10" height="60"/><circle class="ok" cx="644" cy="268" r="12"/><path class="ck" style="stroke-width:3.5" d="M638.5,268.5l3.8,3.8l7.5,-8.0"/><path class="mus" d="M672,236h16M672,250h22M672,264h12"/>
+</svg>

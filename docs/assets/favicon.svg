@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="fav-title">
+<title id="fav-title">software-factory</title>
+<style>
+.bg { fill: #0B6A4C; } .fg { fill: none; stroke: #FFFFFF; stroke-width: 3; stroke-linecap: round; }
+@media (prefers-color-scheme: dark) { .bg { fill: #5BD0A0; } .fg { stroke: #062118; } }
+</style>
+<rect class="bg" x="1" y="1" width="30" height="30" rx="6"/>
+<path class="fg" d="M13,7 L8,25 M15,24 H24"/>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-labelledby="og-title og-desc">
+<title id="og-title">software-factory</title>
+<desc id="og-desc">From idea to shipped change, with proof. The three install commands beside an illustration of an idea riding a belt to a shipped box.</desc>
+<style>
+@font-face { font-family: "SF Body"; src: url("fonts/source-sans-3-latin.woff2") format("woff2"); font-weight: 400 700; }
+@font-face { font-family: "SF Code"; src: url("fonts/jetbrains-mono-latin.woff2") format("woff2"); font-weight: 400 600; }
+text { font-family: "SF Body", "Segoe UI", system-ui, sans-serif; fill: #121719; }
+.mono { font-family: "SF Code", "Cascadia Mono", Consolas, monospace; }
+.muted { fill: #4A555B; }
+.acc { fill: #0B6A4C; }
+</style>
+<rect width="1200" height="630" fill="#FFFFFF"/>
+<rect x="0" y="0" width="1200" height="10" fill="#0B6A4C"/>
+<g transform="translate(64,64)">
+<rect width="40" height="40" rx="8" fill="#0B6A4C"/>
+<path d="M18,9 L12,32 M21,30 H31" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
+</g>
+<text class="mono" x="120" y="93" style="font-size:28px;font-weight:600">software-factory</text>
+<text x="64" y="200" style="font-size:60px;font-weight:650;letter-spacing:-1px">From idea to shipped</text>
+<text x="64" y="268" style="font-size:60px;font-weight:650;letter-spacing:-1px">change, with proof.</text>
+<text class="muted" x="64" y="320" style="font-size:26px">Free Claude Code skills that test, review and prove each change.</text>
+<rect x="64" y="384" width="560" height="182" rx="14" fill="#F3F5F6" stroke="#C9D1D6" stroke-width="2"/>
+<text class="mono" x="92" y="430" style="font-size:20px"><tspan class="muted">/plugin install</tspan> sf-core <tspan class="muted">--marketplace</tspan></text>
+<text class="mono" x="116" y="462" style="font-size:20px"><tspan class="muted">rishabh0111/software-factory</tspan></text>
+<text class="mono" x="92" y="502" style="font-size:22px;font-weight:600"><tspan class="acc">/sf-setup</tspan></text>
+<text class="mono" x="92" y="540" style="font-size:22px;font-weight:600"><tspan class="acc">/sf-start</tspan></text>
+<image href="illustrations/hero.svg" x="664" y="336" width="480" height="280" preserveAspectRatio="xMidYMid meet"/>
+</svg>

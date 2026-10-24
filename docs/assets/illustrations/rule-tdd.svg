@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180" role="img" aria-labelledby="sf-rule-tdd-t sf-rule-tdd-d">
+<title id="sf-rule-tdd-t">Red, then green</title>
+<desc id="sf-rule-tdd-d">Two test cards. The first has a red bar and a red cross: the test fails first. An arrow leads to the second, with a green bar and a green check: then it passes.</desc>
+<style>
+:root { color-scheme: light dark; }
+.bd { fill: #F3F5F6; }
+.pp { fill: #FFFFFF; stroke: #C9D1D6; stroke-width: 2; }
+.pf { fill: #FFFFFF; }
+.pl { fill: none; stroke: #C9D1D6; stroke-width: 3.5; stroke-linecap: round; }
+.dk { fill: #CDD5DA; }
+.dk2 { fill: #E1E7EA; }
+.gr { fill: #3A454B; }
+.grs { fill: none; stroke: #3A454B; stroke-linecap: round; stroke-linejoin: round; }
+.scr { fill: #121719; }
+.eye { fill: #E8EDEF; }
+.mu { fill: #77838A; }
+.mus { fill: none; stroke: #77838A; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ok { fill: #0B6A4C; }
+.oks { fill: #E2F1EA; }
+.okl { fill: none; stroke: #0B6A4C; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ck { fill: none; stroke: #FFFFFF; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.no { fill: #B42318; }
+.nos { fill: #FBE4E1; }
+.wn { fill: #E3A83A; }
+.box { fill: #C99A62; }
+.box2 { fill: #A97C47; }
+.sl { fill: #4C6378; }
+.sla { fill: none; stroke: #4C6378; stroke-linecap: round; }
+.ink { fill: #121719; }
+.mono { font-family: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, Menlo, monospace; font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  .bd { fill: #161B1E; }
+  .pp { fill: #252D32; stroke: #3E4A50; }
+  .pf { fill: #252D32; }
+  .pl { stroke: #4E5B62; }
+  .dk { fill: #343E44; }
+  .dk2 { fill: #232A2E; }
+  .gr { fill: #56646C; }
+  .grs { stroke: #8C99A0; }
+  .scr { fill: #0B0F11; }
+  .mu { fill: #7D8A91; }
+  .mus { stroke: #7D8A91; }
+  .ok { fill: #5BD0A0; }
+  .oks { fill: #13342A; }
+  .okl { stroke: #5BD0A0; }
+  .ck { stroke: #062118; }
+  .no { fill: #FF8A7A; }
+  .nos { fill: #3D1C18; }
+  .sl { fill: #8EA3B8; }
+  .sla { stroke: #8EA3B8; }
+  .ink { fill: #E8EDEF; }
+}
+.ac { fill: #0B6A4C; }
+.acs { fill: none; stroke: #0B6A4C; stroke-linecap: round; stroke-linejoin: round; }
+.ar { fill: none; stroke: #0B6A4C; stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; }
+.ha { fill: #E2F1EA; }
+@media (prefers-color-scheme: dark) { .ac { fill: #5BD0A0; } .acs, .ar { stroke: #5BD0A0; } .ha { fill: #13342A; } }
+</style>
+<defs><clipPath id="sf-rule-tdd-c"><rect x="6" y="6" width="228" height="168" rx="24"/></clipPath></defs>
+<rect class="bd" x="6" y="6" width="228" height="168" rx="24"/><g clip-path="url(#sf-rule-tdd-c)"><ellipse class="oks" cx="120" cy="96" rx="94" ry="72"/><rect class="pp" x="28" y="36" width="72" height="96" rx="8"/><rect class="no" x="28" y="36" width="72" height="14" rx="6"/><path class="pl" style="stroke-width:3" d="M40,66h48M40,78h32"/><rect class="pp" x="140" y="36" width="72" height="96" rx="8"/><rect class="ok" x="140" y="36" width="72" height="14" rx="6"/><path class="pl" style="stroke-width:3" d="M152,66h48M152,78h32"/><circle class="no" cx="64" cy="106" r="16"/><path class="ck" style="stroke-width:4.7" d="M58.0,100.0l12.0,12.0M70.0,100.0l-12.0,12.0"/><circle class="ok" cx="176" cy="106" r="16"/><path class="ck" style="stroke-width:4.7" d="M168.7,106.7l5.1,5.1l10.0,-10.7"/><path class="mus" d="M108,88h24m-8,-8l8,8l-8,8"/></g>
+</svg>

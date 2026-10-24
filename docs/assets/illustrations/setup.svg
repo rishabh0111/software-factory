@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180" role="img" aria-labelledby="sf-setup-t sf-setup-d">
+<title id="sf-setup-t">Set up the repository</title>
+<desc id="sf-setup-d">A project folder with three agent docs sticking out of it, a gear in front and a green check: the repository is set up once.</desc>
+<style>
+:root { color-scheme: light dark; }
+.bd { fill: #F3F5F6; }
+.pp { fill: #FFFFFF; stroke: #C9D1D6; stroke-width: 2; }
+.pf { fill: #FFFFFF; }
+.pl { fill: none; stroke: #C9D1D6; stroke-width: 3.5; stroke-linecap: round; }
+.dk { fill: #CDD5DA; }
+.dk2 { fill: #E1E7EA; }
+.gr { fill: #3A454B; }
+.grs { fill: none; stroke: #3A454B; stroke-linecap: round; stroke-linejoin: round; }
+.scr { fill: #121719; }
+.eye { fill: #E8EDEF; }
+.mu { fill: #77838A; }
+.mus { fill: none; stroke: #77838A; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ok { fill: #0B6A4C; }
+.oks { fill: #E2F1EA; }
+.okl { fill: none; stroke: #0B6A4C; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ck { fill: none; stroke: #FFFFFF; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.no { fill: #B42318; }
+.nos { fill: #FBE4E1; }
+.wn { fill: #E3A83A; }
+.box { fill: #C99A62; }
+.box2 { fill: #A97C47; }
+.sl { fill: #4C6378; }
+.sla { fill: none; stroke: #4C6378; stroke-linecap: round; }
+.ink { fill: #121719; }
+.mono { font-family: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, Menlo, monospace; font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  .bd { fill: #161B1E; }
+  .pp { fill: #252D32; stroke: #3E4A50; }
+  .pf { fill: #252D32; }
+  .pl { stroke: #4E5B62; }
+  .dk { fill: #343E44; }
+  .dk2 { fill: #232A2E; }
+  .gr { fill: #56646C; }
+  .grs { stroke: #8C99A0; }
+  .scr { fill: #0B0F11; }
+  .mu { fill: #7D8A91; }
+  .mus { stroke: #7D8A91; }
+  .ok { fill: #5BD0A0; }
+  .oks { fill: #13342A; }
+  .okl { stroke: #5BD0A0; }
+  .ck { stroke: #062118; }
+  .no { fill: #FF8A7A; }
+  .nos { fill: #3D1C18; }
+  .sl { fill: #8EA3B8; }
+  .sla { stroke: #8EA3B8; }
+  .ink { fill: #E8EDEF; }
+}
+.ac { fill: #0B6A4C; }
+.acs { fill: none; stroke: #0B6A4C; stroke-linecap: round; stroke-linejoin: round; }
+.ar { fill: none; stroke: #0B6A4C; stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; }
+.ha { fill: #E2F1EA; }
+@media (prefers-color-scheme: dark) { .ac { fill: #5BD0A0; } .acs, .ar { stroke: #5BD0A0; } .ha { fill: #13342A; } }
+</style>
+<defs><clipPath id="sf-setup-c"><rect x="6" y="6" width="228" height="168" rx="24"/></clipPath></defs>
+<rect class="bd" x="6" y="6" width="228" height="168" rx="24"/><g clip-path="url(#sf-setup-c)"><ellipse class="oks" cx="120" cy="96" rx="94" ry="72"/><path class="box2" d="M40,56a8,8 0 0 1 8,-8h40l12,12h84a8,8 0 0 1 8,8v86h-152z"/><g transform="rotate(-8 98 90)"><rect class="pp" x="76" y="48" width="46" height="70" rx="4"/><path class="pl" style="stroke-width:3" d="M84,64h28M84,76h20"/></g><g transform="rotate(0 128 90)"><rect class="pp" x="106" y="40" width="46" height="70" rx="4"/><path class="pl" style="stroke-width:3" d="M114,56h28M114,68h20"/></g><g transform="rotate(8 158 90)"><rect class="pp" x="136" y="48" width="46" height="70" rx="4"/><path class="pl" style="stroke-width:3" d="M144,64h28M144,76h20"/></g><path class="wn" d="M40,92h152v58a8,8 0 0 1 -8,8h-136a8,8 0 0 1 -8,-8z"/><path class="gr" d="M204.9,127.5 L211.6,129.5 L211.6,138.5 L204.9,140.5 L204.7,141.2 L208.5,147.0 L202.7,153.9 L196.3,151.1 L195.7,151.5 L194.9,158.4 L186.0,160.0 L182.9,153.8 L182.2,153.6 L177.1,158.4 L169.3,153.9 L170.9,147.1 L170.5,146.6 L163.5,147.0 L160.4,138.5 L166.0,134.3 L166.0,133.7 L160.4,129.5 L163.5,121.0 L170.5,121.4 L170.9,120.9 L169.3,114.1 L177.1,109.6 L182.2,114.4 L182.9,114.2 L186.0,108.0 L194.9,109.6 L195.7,116.5 L196.3,116.9 L202.7,114.1 L208.5,121.0 L204.7,126.8z"/><circle class="pf" cx="186" cy="134" r="8"/><circle class="ok" cx="204" cy="102" r="12"/><path class="ck" style="stroke-width:3.5" d="M198.5,102.5l3.8,3.8l7.5,-8.0"/></g>
+</svg>

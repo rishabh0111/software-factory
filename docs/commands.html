@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commands cheat sheet: software-factory</title>
+<meta name="description" content="Every software-factory command, grouped by plugin.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="canonical" href="https://rishabh0111.github.io/software-factory/commands.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="software-factory">
+<meta property="og:title" content="Commands cheat sheet: software-factory">
+<meta property="og:description" content="Every software-factory command, grouped by plugin.">
+<meta property="og:url" content="https://rishabh0111.github.io/software-factory/commands.html">
+<meta property="og:image" content="https://rishabh0111.github.io/software-factory/assets/social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="software-factory: From idea to shipped change, with proof. The three install commands beside an illustration of an idea riding a belt to a shipped box.">
+<meta name="twitter:card" content="summary_large_image">
+<script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap bar">
+<a class="brand" href="index.html"><img src="assets/favicon.svg" alt="" width="24" height="24"><span>software-factory</span></a>
+<nav class="site-nav" aria-label="Main"><ul><li><a href="commands.html" aria-current="page">Commands</a></li><li><a href="https://github.com/rishabh0111/software-factory">GitHub</a></li></ul></nav>
+<button class="theme-toggle" type="button" hidden>Theme: Light</button>
+</div>
+</header>
+<main id="main" tabindex="-1">
+<div class="wrap page-head">
+<h1>Commands cheat sheet</h1>
+</div>
+<div class="wrap">
+<!-- commands:start -->
+<section class="plugin" aria-labelledby="p-sf-core">
+<h2 id="p-sf-core"><code>sf-core</code></h2>
+<h3 class="group-h">Run only when you type them</h3>
+<ul class="cheats">
+<li class="cheat"><code>/sf-start</code><span>Asks one question, names the next command.</span></li>
+<li class="cheat"><code>/sf-setup</code><span>Records tracker, commands, labels, docs layout and tools.</span></li>
+<li class="cheat"><code>/sf-align</code><span>Interviews you to sharpen a plan.</span></li>
+<li class="cheat"><code>/sf-plan</code><span>Spec, tickets, or a per-task implementation plan.</span></li>
+<li class="cheat"><code>/sf-plan-review</code><span>Reviews a plan for scope, engineering, design, DX.</span></li>
+<li class="cheat"><code>/sf-design</code><span>Design system, art direction, variants, refine and critique.</span></li>
+<li class="cheat"><code>/sf-execute</code><span>Runs a written plan task by task, then one fresh review.</span></li>
+<li class="cheat"><code>/sf-implement</code><span>Builds one ticket or spec, no written plan.</span></li>
+<li class="cheat"><code>/sf-qa</code><span>Tests the running app and fixes what it finds.</span></li>
+<li class="cheat"><code>/sf-benchmark</code><span>Measures page speed before and after a change.</span></li>
+<li class="cheat"><code>/sf-devex-review</code><span>Tries your docs and onboarding live, scores the DX.</span></li>
+<li class="cheat"><code>/sf-ship</code><span>Opens or lands the PR, deploys, watches production.</span></li>
+<li class="cheat"><code>/sf-release-docs</code><span>Brings the docs in line with what shipped.</span></li>
+<li class="cheat"><code>/sf-learn</code><span>Retro on a session; capture or refresh lessons.</span></li>
+<li class="cheat"><code>/sf-decision-map</code><span>Maps a big effort as decision tickets.</span></li>
+<li class="cheat"><code>/sf-map-codebase</code><span>Maps an existing codebase into reference docs.</span></li>
+<li class="cheat"><code>/sf-triage</code><span>Turns issues and PRs into agent-ready briefs.</span></li>
+<li class="cheat"><code>/sf-architecture-review</code><span>Finds deeper modules, shows an HTML report.</span></li>
+<li class="cheat"><code>/sf-guard</code><span>Asks before destructive commands; freezes edits to one folder.</span></li>
+<li class="cheat"><code>/sf-ask</code><span>Which skill or flow fits your situation.</span></li>
+</ul>
+<h3 class="group-h">Also applies on its own</h3>
+<ul class="cheats compact">
+<li class="cheat auto"><code>sf-tdd</code><span>A failing test before any implementation code.</span></li>
+<li class="cheat auto"><code>sf-debug</code><span>Reproduce with a failing test, then fix.</span></li>
+<li class="cheat auto"><code>sf-verify</code><span>Nothing is done until fresh command output shows it.</span></li>
+<li class="cheat auto"><code>sf-code-review</code><span>Standards, spec and quality, reviewed in parallel.</span></li>
+<li class="cheat auto"><code>sf-respond-to-review</code><span>Verifies each review comment, then fixes or pushes back.</span></li>
+<li class="cheat auto"><code>sf-doubt-check</code><span>Fresh-context challenge of a decision in flight.</span></li>
+<li class="cheat auto"><code>sf-source-check</code><span>Grounds decisions in official documentation.</span></li>
+<li class="cheat auto"><code>sf-incremental-build</code><span>Thin, verifiable slices.</span></li>
+<li class="cheat auto"><code>sf-simplify-code</code><span>Clearer code, same behaviour.</span></li>
+<li class="cheat auto"><code>sf-frontend-ui</code><span>Design quality floor for every screen you build.</span></li>
+<li class="cheat auto"><code>sf-module-design</code><span>Vocabulary for deep modules and seams.</span></li>
+<li class="cheat auto"><code>sf-prototype</code><span>Throwaway code to answer a design question.</span></li>
+<li class="cheat auto"><code>sf-glossary</code><span>Keeps the project's domain terms sharp.</span></li>
+<li class="cheat auto"><code>sf-docs-and-adrs</code><span>Records decisions and documentation.</span></li>
+<li class="cheat auto"><code>sf-worktrees</code><span>An isolated workspace for the work.</span></li>
+</ul>
+</section>
+<section class="plugin" aria-labelledby="p-sf-ops">
+<h2 id="p-sf-ops"><code>sf-ops</code></h2>
+<h3 class="group-h">Also applies on its own</h3>
+<ul class="cheats compact">
+<li class="cheat auto"><code>sf-ci-cd-and-automation</code><span>Sets up and fixes CI/CD pipelines.</span></li>
+<li class="cheat auto"><code>sf-constraint-driven-development</code><span>Writes the quality bar down and holds agents to it.</span></li>
+<li class="cheat auto"><code>sf-deploy-checklist</code><span>Pre-deployment verification checklist.</span></li>
+<li class="cheat auto"><code>sf-deprecation-and-migration</code><span>Deprecates and migrates safely.</span></li>
+<li class="cheat auto"><code>sf-incident-response</code><span>Triage, communicate, write the postmortem.</span></li>
+<li class="cheat auto"><code>sf-observability-and-instrumentation</code><span>Makes production behaviour visible.</span></li>
+<li class="cheat auto"><code>sf-performance-optimization</code><span>Measures, then optimises.</span></li>
+</ul>
+</section>
+<section class="plugin" aria-labelledby="p-sf-security">
+<h2 id="p-sf-security"><code>sf-security</code></h2>
+<h3 class="group-h">Also applies on its own</h3>
+<ul class="cheats compact">
+<li class="cheat auto"><code>sf-security-and-hardening</code><span>Hardens code against vulnerabilities.</span></li>
+<li class="cheat auto"><code>sf-security-audit</code><span>Security review of a codebase, API or service.</span></li>
+</ul>
+</section>
+<section class="plugin" aria-labelledby="p-sf-security-deep">
+<h2 id="p-sf-security-deep"><code>sf-security-deep</code></h2>
+<h3 class="group-h">Also applies on its own</h3>
+<ul class="cheats compact">
+<li class="cheat auto"><code>sf-differential-review</code><span>Security review of a risky diff.</span></li>
+<li class="cheat auto"><code>sf-variant-analysis</code><span>Finds other instances of a known bug.</span></li>
+</ul>
+</section>
+<!-- commands:end -->
+</div>
+</main>
+<footer class="site-footer" style="margin-top: var(--space-2xl)">
+<div class="wrap">
+<ul class="foot-links">
+<li><a href="https://rishabh0111.github.io/agent-factory/"><span class="k">Company work?</span><strong>agent-factory</strong></a></li>
+<li><a href="https://github.com/rishabh0111/skills"><span class="k">General skills</span><strong>rishabh0111/skills</strong></a></li>
+<li><a href="https://github.com/rishabh0111/software-factory"><span class="k">Source</span><strong>GitHub</strong></a></li>
+</ul>
+<p class="foot-note">Free and open source. No telemetry.</p>
+</div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

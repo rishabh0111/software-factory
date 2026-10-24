@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 450" width="1200" height="450" role="img" aria-labelledby="sp-title sp-desc">
+<title id="sp-title">What a specialist decides alone, and what it brings to you</title>
+<desc id="sp-desc">Your company.md, with your products, customers, voice, policies and limits, goes to a specialist such as legal-specialist. Emails, tickets and pasted documents enter as data; instructions inside them are reported to you, not followed. On its own, the specialist uses its department skills, such as triage-nda, review-contract and legal-risk-assessment, for research, analysis, drafts and recommendations, and produces a draft with a reviewer checklist. Nothing leaves without passing a gate: the draft is brought to you first, you approve it, and only then is it sent, signed, paid or published.</desc>
+<style>
+:root { color-scheme: light dark; }
+text { font-family: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif; fill: #121719; font-size: 15px; }
+.mono { font-family: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, Menlo, monospace; }
+.b { font-weight: 650; }
+.muted { fill: #4A555B; }
+.sm { font-size: 13px; }
+.xs { font-size: 12px; }
+.h { font-size: 20px; }
+.ink { fill: #121719; }
+.block { fill: #F3F5F6; stroke: #77838A; stroke-width: 1.5; }
+.box { fill: #FFFFFF; stroke: #77838A; stroke-width: 1.5; }
+.opt { fill: #FFFFFF; stroke: #77838A; stroke-width: 1.5; stroke-dasharray: 5 4; }
+.key { fill: #E2F1EA; stroke: #0B6A4C; stroke-width: 2; }
+.gate { fill: #FBEFD9; stroke: #8A5300; stroke-width: 2; }
+.gatei { fill: none; stroke: #8A5300; stroke-width: 2.5; stroke-linecap: round; }
+.warn { fill: #8A5300; }
+.acc { fill: #0B6A4C; }
+.line { fill: none; stroke: #77838A; stroke-width: 1.75; }
+.dash { fill: none; stroke: #77838A; stroke-width: 1.75; stroke-dasharray: 6 5; }
+.aline { fill: none; stroke: #0B6A4C; stroke-width: 2.25; }
+.head { fill: #77838A; }
+.ahead { fill: #0B6A4C; }
+.red { fill: #B42318; }
+.green { fill: #0B6A4C; }
+.icon { fill: #FFFFFF; stroke: #4A555B; stroke-width: 1.5; stroke-linejoin: round; }
+.iconl { fill: none; stroke: #4A555B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-color-scheme: dark) {
+  text, .ink { fill: #E8EDEF; }
+  .muted { fill: #A9B4BA; }
+  .block { fill: #161B1E; stroke: #7D8A91; }
+  .box, .opt { fill: #0E1214; stroke: #7D8A91; }
+  .key { fill: #13342A; stroke: #5BD0A0; }
+  .gate { fill: #3A2C12; stroke: #F2B755; }
+  .gatei { stroke: #F2B755; }
+  .warn { fill: #F2B755; }
+  .acc, .green { fill: #5BD0A0; }
+  .red { fill: #FF8A7A; }
+  .line, .dash { stroke: #7D8A91; }
+  .head { fill: #7D8A91; }
+  .aline { stroke: #5BD0A0; }
+  .ahead { fill: #5BD0A0; }
+  .icon { fill: #0E1214; stroke: #A9B4BA; }
+  .iconl { stroke: #A9B4BA; }
+}
+</style>
+<defs>
+<marker id="s-h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="head" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+
+<!-- company.md -->
+<g transform="translate(70,118)"><path class="icon" d="M0,0 h36 l14,14 v52 h-50 z"/><path class="iconl" d="M36,0 v14 h14 M10,28 h30 M10,38 h30 M10,48 h20"/></g>
+<text class="mono b" x="20" y="214">company.md</text>
+<text class="muted sm" x="20" y="236">Products, customers,</text>
+<text class="muted sm" x="20" y="254">voice, policies, limits</text>
+
+<!-- upper lane -->
+<rect class="block" x="230" y="30" width="710" height="250" rx="10"/>
+<text class="b" x="254" y="60">Decides alone</text>
+<text class="muted sm" x="254" y="80">Research, analysis, drafts, recommendations</text>
+
+<rect class="key" x="254" y="130" width="170" height="80" rx="6"/>
+<text class="muted sm" x="339" y="160" text-anchor="middle">Specialist</text>
+<text class="mono b" x="339" y="184" text-anchor="middle" style="font-size:14px">legal-specialist</text>
+<path class="line" d="M424,170 H466" marker-end="url(#s-h)"/>
+
+<text class="muted sm" x="472" y="118">Department skills</text>
+<rect class="box" x="472" y="128" width="214" height="30" rx="4"/><text class="mono sm" x="486" y="148">triage-nda</text>
+<rect class="box" x="472" y="164" width="214" height="30" rx="4"/><text class="mono sm" x="486" y="184">review-contract</text>
+<rect class="box" x="472" y="200" width="214" height="30" rx="4"/><text class="mono sm" x="486" y="220">legal-risk-assessment</text>
+<path class="line" d="M686,170 H736" marker-end="url(#s-h)"/>
+
+<rect class="box" x="740" y="130" width="176" height="80" rx="6"/>
+<text class="b" x="828" y="164" text-anchor="middle">Draft</text>
+<text class="sm" x="828" y="186" text-anchor="middle">+ reviewer checklist</text>
+
+<!-- lower lane -->
+<rect class="gate" x="720" y="300" width="460" height="130" rx="10"/>
+<text class="b warn" x="1160" y="326" text-anchor="end">Brought to you first</text>
+<g transform="translate(810,342)" aria-hidden="true">
+<path class="gatei" d="M2,2 V48 M34,2 V48 M2,12 H34 M2,38 H34 M2,38 L34,12"/>
+</g>
+<text class="muted xs" x="828" y="408" text-anchor="middle">gate</text>
+<path class="line" d="M852,366 H900" marker-end="url(#s-h)"/>
+<g transform="translate(918,344)"><circle class="icon" cx="14" cy="9" r="8"/><path class="icon" d="M0,40 v-7 a14,12 0 0 1 28,0 v7 z"/></g>
+<text class="b" x="932" y="408" text-anchor="middle">You approve</text>
+<path class="line" d="M960,366 H1004" marker-end="url(#s-h)"/>
+<rect class="box" x="1008" y="336" width="156" height="60" rx="6"/>
+<text class="sm" x="1086" y="361" text-anchor="middle">Sent, signed, paid</text>
+<text class="sm" x="1086" y="379" text-anchor="middle">or published</text>
+
+<!-- inputs -->
+<g transform="translate(20,322)">
+<path class="icon" d="M0,0 h24 l9,9 v33 h-33 z"/><path class="iconl" d="M24,0 v9 h9"/>
+<path class="icon" d="M44,0 h24 l9,9 v33 h-33 z"/><path class="iconl" d="M68,0 v9 h9"/>
+<path class="icon" d="M88,0 h24 l9,9 v33 h-33 z"/><path class="iconl" d="M112,0 v9 h9"/>
+</g>
+<text class="sm" x="20" y="386">Emails, tickets,</text>
+<text class="sm" x="20" y="404">pasted documents</text>
+<rect class="box" x="160" y="330" width="52" height="26" rx="4"/>
+<text class="mono sm" x="186" y="348" text-anchor="middle">data</text>
+<path class="line" d="M212,343 H300 V214" marker-end="url(#s-h)"/>
+<rect class="box" x="330" y="314" width="330" height="58" rx="6"/>
+<text class="sm" x="346" y="338">Instructions inside them are reported</text>
+<text class="sm" x="346" y="358">to you, not followed.</text>
+<path class="line" d="M330,343 H302" />
+<!-- arrows drawn last so heads sit on top -->
+<path class="line" d="M178,170 H250" marker-end="url(#s-h)"/>
+<path class="line" d="M828,210 V338" marker-end="url(#s-h)"/>
+</svg>

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-labelledby="repos-title repos-desc">
+<title id="repos-title">The three repositories and how they depend on each other</title>
+<desc id="repos-desc">software-factory holds the engineering path, idea to shipped change, for developers using a coding agent. Its base plugin sf-core depends on skills-core and installs it with it. Four optional plugins sit beside sf-core: sf-reviewers, sf-security, sf-security-deep and sf-ops. agent-factory holds company work for founders and small teams: af-core with the company.md template, and one specialist for each department: support, sales, finance, legal, HR, operations, data, design, product, marketing, CEO advisor and small business. It builds on the skills repository. There is no link between software-factory and agent-factory; engineering work goes to software-factory. The skills repository, with skills-core for thinking, writing and research, is for everyone.</desc>
+<style>
+:root { color-scheme: light dark; }
+text { font-family: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif; fill: #121719; font-size: 15px; }
+.mono { font-family: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, Menlo, monospace; }
+.b { font-weight: 650; }
+.muted { fill: #4A555B; }
+.sm { font-size: 13px; }
+.xs { font-size: 12px; }
+.h { font-size: 20px; }
+.ink { fill: #121719; }
+.block { fill: #F3F5F6; stroke: #77838A; stroke-width: 1.5; }
+.box { fill: #FFFFFF; stroke: #77838A; stroke-width: 1.5; }
+.opt { fill: #FFFFFF; stroke: #77838A; stroke-width: 1.5; stroke-dasharray: 5 4; }
+.key { fill: #E2F1EA; stroke: #0B6A4C; stroke-width: 2; }
+.gate { fill: #FBEFD9; stroke: #8A5300; stroke-width: 2; }
+.gatei { fill: none; stroke: #8A5300; stroke-width: 2.5; stroke-linecap: round; }
+.warn { fill: #8A5300; }
+.acc { fill: #0B6A4C; }
+.line { fill: none; stroke: #77838A; stroke-width: 1.75; }
+.dash { fill: none; stroke: #77838A; stroke-width: 1.75; stroke-dasharray: 6 5; }
+.aline { fill: none; stroke: #0B6A4C; stroke-width: 2.25; }
+.head { fill: #77838A; }
+.ahead { fill: #0B6A4C; }
+.red { fill: #B42318; }
+.green { fill: #0B6A4C; }
+.icon { fill: #FFFFFF; stroke: #4A555B; stroke-width: 1.5; stroke-linejoin: round; }
+.iconl { fill: none; stroke: #4A555B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-color-scheme: dark) {
+  text, .ink { fill: #E8EDEF; }
+  .muted { fill: #A9B4BA; }
+  .block { fill: #161B1E; stroke: #7D8A91; }
+  .box, .opt { fill: #0E1214; stroke: #7D8A91; }
+  .key { fill: #13342A; stroke: #5BD0A0; }
+  .gate { fill: #3A2C12; stroke: #F2B755; }
+  .gatei { stroke: #F2B755; }
+  .warn { fill: #F2B755; }
+  .acc, .green { fill: #5BD0A0; }
+  .red { fill: #FF8A7A; }
+  .line, .dash { stroke: #7D8A91; }
+  .head { fill: #7D8A91; }
+  .aline { stroke: #5BD0A0; }
+  .ahead { fill: #5BD0A0; }
+  .icon { fill: #0E1214; stroke: #A9B4BA; }
+  .iconl { stroke: #A9B4BA; }
+}
+</style>
+<defs>
+<marker id="r-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path class="ahead" d="M0,0 L10,5 L0,10 z"/></marker>
+<marker id="r-h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="head" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+
+<!-- software-factory -->
+<rect class="block" x="20" y="20" width="540" height="300" rx="10"/>
+<text class="mono b h" x="44" y="56">software-factory</text>
+<text class="muted" x="44" y="80">Engineering: idea to shipped change</text>
+<rect class="key" x="44" y="104" width="200" height="124" rx="6"/>
+<text class="mono b" x="64" y="140" style="font-size:18px">sf-core</text>
+<text x="64" y="166">The engineering path</text>
+<text class="muted sm" x="64" y="188">Base plugin</text>
+<text class="muted sm" x="276" y="118">Optional plugins</text>
+<rect class="opt" x="276" y="132" width="128" height="40" rx="6"/>
+<text class="mono xs" x="340" y="157" text-anchor="middle">sf-reviewers</text>
+<rect class="opt" x="414" y="132" width="128" height="40" rx="6"/>
+<text class="mono xs" x="478" y="157" text-anchor="middle">sf-security</text>
+<rect class="opt" x="276" y="184" width="128" height="40" rx="6"/>
+<text class="mono xs" x="340" y="209" text-anchor="middle">sf-security-deep</text>
+<rect class="opt" x="414" y="184" width="128" height="40" rx="6"/>
+<text class="mono xs" x="478" y="209" text-anchor="middle">sf-ops</text>
+<text class="b" x="536" y="308" text-anchor="end">For developers using a coding agent</text>
+
+<!-- agent-factory -->
+<rect class="block" x="600" y="20" width="340" height="300" rx="10"/>
+<text class="mono b h" x="624" y="56">agent-factory</text>
+<text class="muted" x="624" y="80">Company work</text>
+<rect class="box" x="624" y="96" width="292" height="40" rx="6"/>
+<text x="640" y="121"><tspan class="mono b">af-core</tspan><tspan class="muted sm" dx="10">company.md template</tspan></text>
+<g class="tiles">
+<rect class="box" x="624" y="146" width="92" height="24" rx="4"/><text style="font-size:13px" x="670" y="163" text-anchor="middle">support</text>
+<rect class="box" x="724" y="146" width="92" height="24" rx="4"/><text style="font-size:13px" x="770" y="163" text-anchor="middle">sales</text>
+<rect class="box" x="824" y="146" width="92" height="24" rx="4"/><text style="font-size:13px" x="870" y="163" text-anchor="middle">finance</text>
+<rect class="box" x="624" y="176" width="92" height="24" rx="4"/><text style="font-size:13px" x="670" y="193" text-anchor="middle">legal</text>
+<rect class="box" x="724" y="176" width="92" height="24" rx="4"/><text style="font-size:13px" x="770" y="193" text-anchor="middle">HR</text>
+<rect class="box" x="824" y="176" width="92" height="24" rx="4"/><text style="font-size:13px" x="870" y="193" text-anchor="middle">operations</text>
+<rect class="box" x="624" y="206" width="92" height="24" rx="4"/><text style="font-size:13px" x="670" y="223" text-anchor="middle">data</text>
+<rect class="box" x="724" y="206" width="92" height="24" rx="4"/><text style="font-size:13px" x="770" y="223" text-anchor="middle">design</text>
+<rect class="box" x="824" y="206" width="92" height="24" rx="4"/><text style="font-size:13px" x="870" y="223" text-anchor="middle">product</text>
+<rect class="box" x="624" y="236" width="92" height="24" rx="4"/><text style="font-size:13px" x="670" y="253" text-anchor="middle">marketing</text>
+<rect class="box" x="724" y="236" width="92" height="24" rx="4"/><text style="font-size:13px" x="770" y="253" text-anchor="middle">CEO advisor</text>
+<rect class="box" x="824" y="236" width="92" height="24" rx="4"/><text style="font-size:12.5px" x="870" y="253" text-anchor="middle">small business</text>
+</g>
+<text class="muted sm" x="624" y="284">Engineering work goes to software-factory.</text>
+<text class="b" x="916" y="308" text-anchor="end">For founders and small teams</text>
+
+<!-- skills -->
+<rect class="block" x="20" y="410" width="920" height="110" rx="10"/>
+<text class="mono b h" x="44" y="446">skills</text>
+<text class="muted" x="44" y="470">Thinking, writing, research</text>
+<rect class="key" x="330" y="428" width="200" height="56" rx="6"/>
+<text class="mono b" x="430" y="462" text-anchor="middle" style="font-size:18px">skills-core</text>
+<text class="b" x="916" y="500" text-anchor="end">For everyone</text>
+
+<!-- connections -->
+<path class="aline" d="M144,228 V366 H430 V424" marker-end="url(#r-ah)"/>
+<text class="sm" x="156" y="356">depends on, installed with it</text>
+<path class="dash" d="M770,320 V406" marker-end="url(#r-h)"/>
+<text class="sm" x="782" y="386">builds on</text>
+</svg>

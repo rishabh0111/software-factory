@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180" role="img" aria-labelledby="sf-path-ui-t sf-path-ui-d">
+<title id="sf-path-ui-t">A change with a screen</title>
+<desc id="sf-path-ui-d">A browser window with an image, text and a green button, and a pointer clicking it: changes with a screen are tested in a real browser.</desc>
+<style>
+:root { color-scheme: light dark; }
+.bd { fill: #F3F5F6; }
+.pp { fill: #FFFFFF; stroke: #C9D1D6; stroke-width: 2; }
+.pf { fill: #FFFFFF; }
+.pl { fill: none; stroke: #C9D1D6; stroke-width: 3.5; stroke-linecap: round; }
+.dk { fill: #CDD5DA; }
+.dk2 { fill: #E1E7EA; }
+.gr { fill: #3A454B; }
+.grs { fill: none; stroke: #3A454B; stroke-linecap: round; stroke-linejoin: round; }
+.scr { fill: #121719; }
+.eye { fill: #E8EDEF; }
+.mu { fill: #77838A; }
+.mus { fill: none; stroke: #77838A; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ok { fill: #0B6A4C; }
+.oks { fill: #E2F1EA; }
+.okl { fill: none; stroke: #0B6A4C; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ck { fill: none; stroke: #FFFFFF; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.no { fill: #B42318; }
+.nos { fill: #FBE4E1; }
+.wn { fill: #E3A83A; }
+.box { fill: #C99A62; }
+.box2 { fill: #A97C47; }
+.sl { fill: #4C6378; }
+.sla { fill: none; stroke: #4C6378; stroke-linecap: round; }
+.ink { fill: #121719; }
+.mono { font-family: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, Menlo, monospace; font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  .bd { fill: #161B1E; }
+  .pp { fill: #252D32; stroke: #3E4A50; }
+  .pf { fill: #252D32; }
+  .pl { stroke: #4E5B62; }
+  .dk { fill: #343E44; }
+  .dk2 { fill: #232A2E; }
+  .gr { fill: #56646C; }
+  .grs { stroke: #8C99A0; }
+  .scr { fill: #0B0F11; }
+  .mu { fill: #7D8A91; }
+  .mus { stroke: #7D8A91; }
+  .ok { fill: #5BD0A0; }
+  .oks { fill: #13342A; }
+  .okl { stroke: #5BD0A0; }
+  .ck { stroke: #062118; }
+  .no { fill: #FF8A7A; }
+  .nos { fill: #3D1C18; }
+  .sl { fill: #8EA3B8; }
+  .sla { stroke: #8EA3B8; }
+  .ink { fill: #E8EDEF; }
+}
+.ac { fill: #0B6A4C; }
+.acs { fill: none; stroke: #0B6A4C; stroke-linecap: round; stroke-linejoin: round; }
+.ar { fill: none; stroke: #0B6A4C; stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; }
+.ha { fill: #E2F1EA; }
+@media (prefers-color-scheme: dark) { .ac { fill: #5BD0A0; } .acs, .ar { stroke: #5BD0A0; } .ha { fill: #13342A; } }
+</style>
+<defs><clipPath id="sf-path-ui-c"><rect x="6" y="6" width="228" height="168" rx="24"/></clipPath></defs>
+<rect class="bd" x="6" y="6" width="228" height="168" rx="24"/><g clip-path="url(#sf-path-ui-c)"><ellipse class="oks" cx="120" cy="96" rx="94" ry="72"/><rect class="pp" x="28" y="30" width="170" height="122" rx="10"/><path class="pl" style="stroke-width:2" d="M28,50h170"/><circle class="mu" cx="40" cy="40" r="3.5"/><circle class="mu" cx="51" cy="40" r="3.5"/><circle class="mu" cx="62" cy="40" r="3.5"/><rect class="oks" x="40" y="60" width="66" height="50" rx="4"/><path class="sl" d="M46,104l18,-22l12,12l10,-8l16,18z"/><path class="pl" d="M118,66h66M118,80h48M118,94h56"/><rect class="ok" x="118" y="114" width="58" height="22" rx="5"/><rect class="pf" style="fill-opacity:.85" x="130" y="123" width="34" height="4" rx="2"/><path class="gr" style="stroke:#FFFFFF;stroke-width:2;stroke-linejoin:round" d="M168,128l0,34l9,-8l7,14l7,-3l-7,-14l12,-1z"/><path class="okl" d="M156,120l-6,-6M168,114v-8M180,120l6,-6"/></g>
+</svg>
