@@ -1,0 +1,5 @@
+interface:
+  display_name: "Plan"
+  short_description: "Spec, tickets, or a per-task plan"
+policy:
+  allow_implicit_invocation: false

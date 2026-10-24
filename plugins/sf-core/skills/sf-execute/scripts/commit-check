@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Pre-commit guard for plan execution: refuse to commit from the wrong
+# place. Run it before staging every commit.
+#
+# Checks, in order:
+#   1. cwd drift: the current checkout's root is WORKTREE_ROOT (the
+#      ledger's Worktree: line, or the directory an implementer's dispatch
+#      names). A prior `cd` into the main repo would otherwise commit there.
+#   2. HEAD is attached to a branch.
+#   3. That branch is not the default or a protected branch.
+#
+# Never self-recover from a failure here (no `git update-ref` onto a
+# protected branch): fix the cause, then re-run.
+#
+# Usage: commit-check WORKTREE_ROOT
+# Exit: 0 when every check passes, 1 on the first failure.
+set -euo pipefail
+
+if [ $# -ne 1 ]; then
+  echo "usage: commit-check WORKTREE_ROOT" >&2
+  exit 2
+fi
+
+# Physical paths on both sides, so C:/x and /c/x spellings compare equal.
+expected=$(CDPATH='' cd -- "$1" 2>/dev/null && pwd -P) \
+  || { echo "FATAL: worktree root does not exist: $1" >&2; exit 1; }
+actual_raw=$(git rev-parse --show-toplevel 2>/dev/null) \
+  || { echo "FATAL: not inside a git checkout" >&2; exit 1; }
+actual=$(CDPATH='' cd -- "$actual_raw" && pwd -P)
+if [ "$actual" != "$expected" ]; then
+  echo "FATAL: cwd drifted out of the worktree" >&2
+  echo "  expected: $expected" >&2
+  echo "  current:  $actual" >&2
+  echo "RECOVERY: cd \"$expected\" and re-run the commit." >&2
+  exit 1
+fi
+
+git symbolic-ref --quiet HEAD >/dev/null \
+  || { echo "FATAL: HEAD is detached; commit only on a branch" >&2; exit 1; }
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+default=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@' || true)
+if { [ -n "$default" ] && [ "$branch" = "$default" ]; } \
+  || printf '%s\n' "$branch" | grep -Eq '^(main|master|develop|trunk|release/.*)$'; then
+  echo "FATAL: HEAD is on '$branch', a default or protected branch" >&2
+  echo "Commit on the plan's branch (or the task branch your dispatch names)." >&2
+  exit 1
+fi
+
+echo "commit-check: ok ($branch in $actual)"

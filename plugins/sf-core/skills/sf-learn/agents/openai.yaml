@@ -1,0 +1,5 @@
+interface:
+  display_name: "Learn"
+  short_description: "Run a retrospective, or capture and refresh lessons."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,8 @@
+{
+  "name": "sf-core",
+  "version": "1.0.0",
+  "description": "Idea to shipped change: align, plan, execute, test-first, debug, verify, review, QA, ship, learn, guard.",
+  "author": { "name": "rishabh0111", "url": "https://github.com/rishabh0111" },
+  "repository": "https://github.com/rishabh0111/software-factory",
+  "dependencies": [{ "name": "skills-core", "marketplace": "skills" }]
+}

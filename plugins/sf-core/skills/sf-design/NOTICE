@@ -1,0 +1,42 @@
+sf-design
+
+This skill folder, and four agent files in ../../agents/, contain material derived from
+two third-party works. The files were modified: content was rewritten, merged with this
+skill's existing text, reorganised into new files and modes, tied to an optional external
+tool instead of a bundled one, and, for the vendored scripts, changed to keep every write
+inside the project (draw history and the browser profile moved into `.design/`, working
+folder renamed, identifying strings changed).
+
+1. impeccable (Apache License 2.0, see LICENSE-impeccable)
+   Copyright 2025 Paul Bakaus
+   https://github.com/pbakaus/impeccable @ 9368675
+   Used in: consultation.md, consultation-proposal.md (font procedure, calibration),
+   consultation/product.md, consultation/shape.md, consultation/new-work.md,
+   consultation/document.md, consultation/design-md-format.md, consultation/extract.md,
+   shotgun.md, shotgun/live.md, html.md, html/build.md, refine.md, refine/*.md,
+   critique.md, critique/*.md, and ../../agents/design-finish-reviewer.md,
+   design-documenter.md, design-asset-producer.md, design-manual-edit-applier.md.
+
+   NOTICE content carried from that project:
+
+   Third-Party Notices. This project includes content derived from
+   third-party work, used under the terms of its original license.
+   Platform Design Skills: the ios.md and android.md platform reference
+   files are distilled from ehmo's platform-design-skills (Apple Human
+   Interface Guidelines and Material Design 3 rules), rewritten in
+   Impeccable's voice.
+   Original work: https://github.com/ehmo/platform-design-skills
+   Original license: MIT
+   Author: ehmo
+
+2. taste-skill (MIT License, see LICENSE-taste)
+   Copyright (c) 2026 Leonxlnx
+   https://github.com/Leonxlnx/taste-skill @ 6010f91
+   Used in: direction.md, direction/research.md, direction/scenes.md,
+   direction/scripts/ (draw.mjs, inspect.mjs, lint.mjs, scenes.mjs, assets.mjs,
+   lib/app-draw.mjs, lib/cdp.mjs, lib/probe.mjs, lib/rules.mjs), direction/library/*.json,
+   direction/assets/ (base.css, base.js, app.css, charts.js, scenes/stage.css,
+   scenes/stage.js), direction/evals/evals.json, critique.md, critique/rubric.md.
+   The photographs the library references are served by Lorem Picsum from Unsplash under
+   the Unsplash licence; pictures found with assets.mjs keep their own licences and are
+   credited per assets/credits.json.

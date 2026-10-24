@@ -1,0 +1,34 @@
+sf-frontend-ui
+
+This skill folder contains material derived from two third-party works.
+The files were modified: content was rewritten, merged with this skill's
+existing text, reorganised into new files, and reduced to standing rules
+(procedures moved to other skills).
+
+1. impeccable (Apache License 2.0, see LICENSE-impeccable)
+   Copyright 2025 Paul Bakaus
+   https://github.com/pbakaus/impeccable @ 9368675
+   Used in: SKILL.md (principles, modes, quality floor), references/tells.md,
+   references/app-screens.md, references/build.md, references/ios.md,
+   references/android.md, references/type.md, references/colour.md,
+   references/motion.md, references/layout.md.
+
+   NOTICE content carried from that project:
+
+   Third-Party Notices. This project includes content derived from
+   third-party work, used under the terms of its original license.
+   Platform Design Skills: the ios.md and android.md platform reference
+   files are distilled from ehmo's platform-design-skills (Apple Human
+   Interface Guidelines and Material Design 3 rules), rewritten in
+   Impeccable's voice.
+   Original work: https://github.com/ehmo/platform-design-skills
+   Original license: MIT
+   Author: ehmo
+
+2. taste-skill (MIT License, see LICENSE-taste)
+   Copyright (c) 2026 Leonxlnx
+   https://github.com/Leonxlnx/taste-skill @ 6010f91
+   Used in: SKILL.md (page or app screen, house rules, laws, special
+   cases), references/tells.md, references/app-screens.md,
+   references/type.md, references/colour.md, references/motion.md,
+   references/layout.md, references/imagery.md, references/copy.md.

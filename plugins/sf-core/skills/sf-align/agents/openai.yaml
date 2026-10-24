@@ -1,0 +1,5 @@
+interface:
+  display_name: "Align with Docs"
+  short_description: "Settle a design in decision rounds and write its docs"
+policy:
+  allow_implicit_invocation: false

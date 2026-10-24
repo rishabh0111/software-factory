@@ -1,0 +1,5 @@
+interface:
+  display_name: "Guard"
+  short_description: "Warn before destructive commands, fence edits to one folder, or install git guardrails"
+policy:
+  allow_implicit_invocation: false
