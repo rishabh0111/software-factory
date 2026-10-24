@@ -1,0 +1,7 @@
+{
+  "name": "sf-security-deep",
+  "version": "1.0.0",
+  "description": "Differential review of risky changes and variant analysis after a bug (CC-BY-SA-4.0).",
+  "author": { "name": "rishabh0111", "url": "https://github.com/rishabh0111" },
+  "repository": "https://github.com/rishabh0111/software-factory"
+}

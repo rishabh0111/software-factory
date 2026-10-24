@@ -1,0 +1,3 @@
+interface:
+  display_name: "Differential Review"
+  short_description: "Review code changes for security regressions and impact"

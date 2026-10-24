@@ -1,0 +1,3 @@
+interface:
+  display_name: "Variant Analysis"
+  short_description: "Find other instances of a known vulnerability or bug pattern"

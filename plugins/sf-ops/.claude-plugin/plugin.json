@@ -1,0 +1,7 @@
+{
+  "name": "sf-ops",
+  "version": "1.0.0",
+  "description": "CI/CD, migrations, observability, performance, constraints, incident response and deploy checklists.",
+  "author": { "name": "rishabh0111", "url": "https://github.com/rishabh0111" },
+  "repository": "https://github.com/rishabh0111/software-factory"
+}

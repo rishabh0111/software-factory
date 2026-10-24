@@ -1,0 +1,8 @@
+The skills, agents, commands, evals, tests and workflows in this plugin are adapted from
+Trail of Bits' skills repository (https://github.com/trailofbits/skills), licensed under the
+Creative Commons Attribution-ShareAlike 4.0 International licence (see LICENSE). The differential-review skill was written by Omar Inuwa.
+
+Changes: files were reorganised into this plugin, the plugin was renamed, and references to
+other skills, commands and tools were renamed or rewritten to match this repository, and
+some instructions were edited to fit it. This plugin is distributed under the same
+licence.
