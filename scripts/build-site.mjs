@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// Builds the commands cheat sheet in docs/commands.html and the sf-ask catalog in
-// plugins/sf-core/skills/sf-ask/catalog.md from the skills and agents on disk.
+// Builds the commands cheat sheet in docs/commands.html, the sf-ask catalog in
+// plugins/sf-core/skills/sf-ask/catalog.md and the README's command and plugin
+// tables from the skills, commands and agents on disk.
 //
-//   node scripts/build-site.mjs            rewrite both outputs
-//   node scripts/build-site.mjs --check    exit 1 if either is stale, write nothing
+//   node scripts/build-site.mjs            rewrite every output
+//   node scripts/build-site.mjs --check    exit 1 if any is stale, write nothing
 //   node scripts/build-site.mjs --root DIR read DIR/plugins/ and write under DIR
 //
 // Reads each SKILL.md frontmatter (name, description, disable-model-invocation).
@@ -11,7 +12,14 @@
 // go in an "Also applies on its own" group. Short labels come from
 // docs/commands.labels.json; a skill missing from it gets the first clause of its
 // description. The catalog lists every skill and agent of each plugin with the first
-// sentence of its description. No dependencies.
+// sentence of its description.
+//
+// README.md is rewritten only between its markers:
+//   <!-- commands:start --> ... <!-- commands:end -->  sf-core's skills, "You run"
+//                                                      and "Applies on its own"
+//   <!-- plugins:start --> ... <!-- plugins:end -->    the optional plugins, from
+//                                                      .claude-plugin/marketplace.json
+// No dependencies.
 
 import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, resolve, dirname } from "node:path";
@@ -27,6 +35,8 @@ if (rootIdx !== -1 && !args[rootIdx + 1]) fail("--root needs a directory");
 const root = resolve(rootIdx !== -1 ? args[rootIdx + 1] : join(dirname(fileURLToPath(import.meta.url)), ".."));
 const pagePath = join(root, "docs", "commands.html");
 const labelsPath = join(root, "docs", "commands.labels.json");
+const readmePath = join(root, "README.md");
+const marketplacePath = join(root, ".claude-plugin", "marketplace.json");
 
 function fail(msg) { console.error(`build-site: ${msg}`); process.exit(2); }
 
@@ -172,6 +182,68 @@ function catalog() {
   return out.join("\n") + "\n";
 }
 
+// ---------- the README tables ----------
+
+const CORE = "sf-core";
+
+function commandsOf(plugin) {
+  const dir = join(pluginsDir, plugin, "commands");
+  return mdFiles(dir).map((f) => {
+    const file = join(dir, f);
+    const fm = frontmatter(readFileSync(file, "utf8"), file);
+    return { name: `${plugin}:${f.replace(/\.md$/, "")}`, label: firstClause(fm.description) };
+  });
+}
+
+function readmeCommands() {
+  const core = plugins.find((p) => p.plugin === CORE);
+  if (!core) fail(`no skills in plugins/${CORE}`);
+  const typed = core.skills.filter((s) => s.userRun);
+  const auto = core.skills.filter((s) => !s.userRun);
+  const table = (rows, typedRows) => [
+    `| ${typedRows ? "Command" : "Skill"} | What it does |`,
+    "|---|---|",
+    ...rows.map((s) => `| \`${typedRows ? "/" : ""}${s.name}\` | ${cell(s.label)} |`),
+  ];
+  return [
+    `### You run (${typed.length})`,
+    "",
+    ...table(typed, true),
+    "",
+    `### Applies on its own (${auto.length})`,
+    "",
+    ...table(auto, false),
+  ].join("\n");
+}
+
+function readmePlugins() {
+  if (!existsSync(marketplacePath)) fail(`missing ${marketplacePath}`);
+  const listed = JSON.parse(readFileSync(marketplacePath, "utf8")).plugins || [];
+  const rows = listed.filter((p) => p.name !== CORE).map((p) => {
+    const skills = plugins.find((x) => x.plugin === p.name)?.skills || [];
+    const agents = mdFiles(join(pluginsDir, p.name, "agents")).map((f) => f.replace(/\.md$/, ""));
+    const parts = [];
+    const run = [...skills.filter((s) => s.userRun).map((s) => `/${s.name}`), ...commandsOf(p.name).map((c) => `/${c.name}`)];
+    const own = skills.filter((s) => !s.userRun).map((s) => s.name);
+    if (run.length) parts.push(`You run: ${run.map((n) => `\`${n}\``).join(", ")}`);
+    if (own.length) parts.push(`On its own: ${own.map((n) => `\`${n}\``).join(", ")}`);
+    if (agents.length) parts.push(`Agents: ${agents.map((n) => `\`${n}\``).join(", ")}`);
+    return `| \`${p.name}\` | ${cell(p.description || "")} | ${parts.join("<br>")} |`;
+  });
+  if (!rows.length) return "No optional plugins yet.";
+  return ["| Plugin | What it adds | What is inside |", "|---|---|---|", ...rows].join("\n");
+}
+
+function fillMarkers(text, name, body, file) {
+  const start = `<!-- ${name}:start -->`;
+  const end = `<!-- ${name}:end -->`;
+  const i = text.indexOf(start), j = text.indexOf(end);
+  if (i === -1 || j === -1 || j < i) fail(`markers ${start} / ${end} not found in ${file}`);
+  if (text.indexOf(start, i + 1) !== -1) fail(`${start} appears more than once in ${file}`);
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  return text.slice(0, i + start.length) + (eol + body + eol).replace(/\r?\n/g, eol) + text.slice(j);
+}
+
 // ---------- write or check ----------
 
 const generated = `${START}\n${blocks.join("\n")}\n${END}`;
@@ -186,6 +258,12 @@ const outputs = [
   { path: pagePath, next: page.slice(0, a) + generated + page.slice(b + END.length) },
   { path: catalogPath, next: catalog() },
 ];
+
+if (!existsSync(readmePath)) fail(`missing ${readmePath}`);
+let readme = readFileSync(readmePath, "utf8");
+readme = fillMarkers(readme, "commands", readmeCommands(), "README.md");
+readme = fillMarkers(readme, "plugins", readmePlugins(), "README.md");
+outputs.push({ path: readmePath, next: readme });
 
 const stale = [];
 for (const { path, next } of outputs) {
