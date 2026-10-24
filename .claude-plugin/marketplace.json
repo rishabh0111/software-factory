@@ -1,0 +1,13 @@
+{
+  "name": "software-factory",
+  "owner": { "name": "rishabh0111", "url": "https://github.com/rishabh0111" },
+  "metadata": { "description": "Agent skills that take software from an idea to a reviewed, verified, shipped change." },
+  "allowCrossMarketplaceDependenciesOn": ["skills"],
+  "plugins": [
+    { "name": "sf-core", "source": "./plugins/sf-core", "description": "Idea to shipped change: align, plan, execute, test-first, debug, verify, review, QA, ship, learn, guard." },
+    { "name": "sf-reviewers", "source": "./plugins/sf-reviewers", "description": "Specialist review agents: code, silent failures, tests, types, comments, simplification." },
+    { "name": "sf-security", "source": "./plugins/sf-security", "description": "Security audit and build-time hardening." },
+    { "name": "sf-security-deep", "source": "./plugins/sf-security-deep", "description": "Differential review of risky changes and variant analysis after a bug (CC-BY-SA-4.0)." },
+    { "name": "sf-ops", "source": "./plugins/sf-ops", "description": "CI/CD, migrations, observability, performance, constraints, incident response and deploy checklists." }
+  ]
+}

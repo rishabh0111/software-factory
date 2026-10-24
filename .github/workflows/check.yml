@@ -1,0 +1,19 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generated site and README are up to date
+        run: node scripts/build-site.mjs --check
+      - name: Plugins validate
+        run: npx -y @anthropic-ai/claude-code@2.1.308 plugin validate . --strict
